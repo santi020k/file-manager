@@ -31,6 +31,9 @@ const config = {
       height: { screen: '100dvh' },
       minHeight: { screen: '100dvh' },
       maxHeight: { screen: '100dvh' },
+      backgroundImage: () => ({
+        login: 'url(\'/assets/login/background.webp\')'
+      }),
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
