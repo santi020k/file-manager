@@ -2,10 +2,8 @@
 
 import * as React from 'react'
 
+import { IconBrandGmail, IconLoader2 } from '@tabler/icons-react'
 import { Button } from '@/atoms/button/button'
-import { Icons } from '@/atoms/icons/icons'
-import { Input } from '@/atoms/input/input'
-import { Label } from '@/atoms/label/label'
 import { cn } from '@/lib/utils'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -16,8 +14,7 @@ export function UserAuthForm ({ className, ...props }: UserAuthFormProps) {
     setIsLoading
   ] = React.useState<boolean>(false)
 
-  async function onSubmit (event: React.SyntheticEvent) {
-    event.preventDefault()
+  const handleClick = () => {
     setIsLoading(true)
 
     setTimeout(
@@ -33,44 +30,10 @@ export function UserAuthForm ({ className, ...props }: UserAuthFormProps) {
       'grid gap-6',
       className
     )} {...props}>
-      <form onSubmit={onSubmit}>
-        <div className="grid gap-2">
-          <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="email">
-              Email
-            </Label>
-            <Input
-              id="email"
-              placeholder="name@example.com"
-              type="email"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect="off"
-              disabled={isLoading}
-            />
-          </div>
-          <Button disabled={isLoading}>
-            {isLoading && (
-              <Icons.spinner className="mr-2 size-4 animate-spin" />
-            )}
-            Sign In with Email
-          </Button>
-        </div>
-      </form>
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-      </div>
-      <Button variant="outline" type="button" disabled={isLoading}>
-        {isLoading && <Icons.spinner className="mr-2 size-4 animate-spin" />}
-        {!isLoading && <Icons.gitHub className="mr-2 size-4" />}
-        GitHub
+      <Button variant="outline" type="button" onClick={handleClick} disabled={isLoading}>
+        {isLoading && <IconLoader2 className='mr-1 animate-spin' />}
+        {!isLoading && <IconBrandGmail className='mr-1' />}
+        Google
       </Button>
     </div>
   )

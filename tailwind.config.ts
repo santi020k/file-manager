@@ -28,6 +28,9 @@ const config = {
       ]
     },
     extend: {
+      height: { screen: '100dvh' },
+      minHeight: { screen: '100dvh' },
+      maxHeight: { screen: '100dvh' },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
