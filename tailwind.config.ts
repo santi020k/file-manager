@@ -1,4 +1,6 @@
+import tailwindTypography from '@tailwindcss/typography'
 import type { Config } from 'tailwindcss'
+import defaultTheme from 'tailwindcss/defaultTheme'
 
 const config: Config = {
   content: [
@@ -13,8 +15,15 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
       }
+    },
+    fontFamily: {
+      sans: [
+        'var(--font-poppins)',
+        'Roboto',
+        ...defaultTheme.fontFamily.sans
+      ]
     }
   },
-  plugins: []
+  plugins: [tailwindTypography]
 }
 export default config
