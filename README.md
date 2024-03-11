@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# File Manager
 
-## Getting Started
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Next](https://img.shields.io/badge/Next-0C1222?style=for-the-badge&logo=next&logoColor=FDFDFE)
+<!-- TODO: Pending -->
+<!-- ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white) -->
+<!-- ![Zustand](https://img.shields.io/badge/zustand-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) -->
+![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
+![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
+![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-First, run the development server:
+<!-- TODO: add vitest badge and others -->
+
+<!-- Coming soon -->
+![Logo](./public/assets/logo.svg)
+
+## Demo ([Production Website](https://file.santi020k.me/))
+
+<!-- TODO: Pending -->
+<!-- ![App Screenshot](./public/assets/screenshot.webp) -->
+
+## Description
+
+Front-end file picker interface developed with Next.js and Tailwind CSS. Enables seamless interaction for users to manage their data across different cloud storage solutions by picking files from Google Drive and transferring them. Enhances user experience in managing projects and data across various platforms
+
+<!-- TODO: Pending -->
+
+<!-- ## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`PUBLIC_SUPABASE_URL`
+
+`PUBLIC_SUPABASE_ANON_KEY` -->
+
+## Run Locally
+
+Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone git@github.com:santi020k/file-manager.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the project directory
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+  cd file-manager
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Install dependencies
 
-## Learn More
+```bash
+  npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+  npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Note: For Next.js, Node.js version >= v18.17.0 is required.
 
-## Deploy on Vercel
+## Commands
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+All commands are run from the root of the project, from a terminal:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:3000`      |
+| `npm run build`           | Build your production site to `./.next/`          |
+
+## Running Tests (coming soon)
+
+To run tests, run the following command
+
+```bash
+  npm run test
+```
+
+<!-- TODO: Pending -->
+
+<!-- ## Screenshots
+
+![App Screenshot](./public/assets/full-page.webp) -->
+
+## Color Reference
+
+| Color             | Hex                                                                |
+| ----------------- | ------------------------------------------------------------------ |
+| Primary | ![#76ABAE](https://via.placeholder.com/10/76ABAE?text=+) #76ABAE |
+| Secondary | ![#31363F](https://via.placeholder.com/10/31363F?text=+) #31363F |
+
+## [Figma](https://www.figma.com/file/MfvkJvYPDB5Hd49JTqhSMy/File-manager?type=design&node-id=0%3A1&mode=design&t=9CEjJAtc8kvaU6PO-1)
+
+## Features/Roadmap
+
+- [ ] File Management Interface
+- [ ] Google Drive OAuth2 Integration
+- [ ] File Import Google Drive Interface
+- [ ] Google Drive Upload Tracking
+
+## Feedback
+
+If you have any feedback, please reach out to me at <info@santi020k.me>
+
+## 🚀 About Me (coming soon)
+
+Hi, I'm Santiago Molina! 👋
+
+With over a decade of experience, I've played a pivotal role in various projects centered around ReactJS, NodeJS, and TypeScript. As a dedicated co-organizer of the React JS Colombia Meetup, I actively cultivate an environment of learning and collaboration within the tech community.
+
+## Authors
+
+- [@santi020k](https://www.github.com/santi020k)
+
+## 🔗 Links
+
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://santi020k.me/)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/santi020k/)
+[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/santi020k)
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)

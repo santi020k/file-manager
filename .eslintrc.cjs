@@ -8,6 +8,7 @@ module.exports = {
     React: true,
     JSX: true
   },
+  ignorePatterns: ['*.md'],
   extends: [
     'standard',
     'eslint:recommended',
