@@ -24,6 +24,7 @@
       "@/organisms/*": ["./src/components/organisms/*"],
       "@/store/*": ["./src/store/*"],
       "@/lib/*": ["./src/lib/*"],
+      "@/schemas/*": ["./src/schemas/*"],
     },
     "types": ["@testing-library/jest-dom"]
   },
