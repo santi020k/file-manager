@@ -15,7 +15,7 @@
 <!-- TODO: add vitest badge and others -->
 
 <!-- Coming soon -->
-![Logo](./public/assets/logo.svg)
+![Logo](./public/assets/logos/logo.svg)
 
 ## Demo ([Production Website](https://file.santi020k.me/))
 
