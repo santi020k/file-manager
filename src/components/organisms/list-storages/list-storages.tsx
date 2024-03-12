@@ -42,8 +42,8 @@ const Dashboard = () => {
         </aside>
 
         {/* Content */}
-        <section className="overflow-auto p-6 md:order-1">
-          <Gallery onSelect={handleEdit} />
+        <section className="overflow-auto p-6 pb-16 md:order-1">
+          <Gallery onEdit={handleEdit} />
         </section>
       </div>
     </div>

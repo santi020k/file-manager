@@ -26,12 +26,15 @@ const useBatchStore = create<BatchState>()(set => ({
   })),
   handleSelected: id => set(({ batch }) => {
     const filteredSelected = batch.selected?.filter(selected => selected !== id)
-    const isFiltered = filteredSelected?.length === batch.selected?.length
-    if (isFiltered) {
+    const isFiltered = filteredSelected?.length !== batch.selected?.length
+    if (!isFiltered || !batch.selected.length) {
       return ({
         batch: {
           ...batch,
-          selected: filteredSelected
+          selected: [
+            ...batch.selected,
+            id
+          ]
         }
       })
     }
@@ -39,10 +42,7 @@ const useBatchStore = create<BatchState>()(set => ({
     return ({
       batch: {
         ...batch,
-        selected: [
-          ...batch.selected,
-          id
-        ]
+        selected: filteredSelected
       }
     })
   })

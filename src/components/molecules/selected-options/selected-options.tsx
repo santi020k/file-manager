@@ -20,8 +20,6 @@ const SelectedOptions: React.FC<SelectedOptionsProps> = ({ onCancel }) => (
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent>
-      {/* <DropdownMenuLabel>Move</DropdownMenuLabel>
-      <DropdownMenuSeparator /> */}
       <DropdownMenuItem>Move</DropdownMenuItem>
       <DropdownMenuItem>Delete</DropdownMenuItem>
       <DropdownMenuItem onClick={onCancel}>Cancel</DropdownMenuItem>
