@@ -2,7 +2,9 @@ import Building from '@/atoms/building/building'
 
 const PrivacyPage = () => {
   return (
-    <Building />
+    <main>
+      <Building />
+    </main>
   )
 }
 
