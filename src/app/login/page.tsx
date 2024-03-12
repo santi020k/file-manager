@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { UserAuthForm } from '@/organisms/user-auth-form'
+import { UserAuthForm } from '@/components/organisms/user-auth-form/user-auth-form'
 
 export const metadata: Metadata = {
   title: 'Login',
