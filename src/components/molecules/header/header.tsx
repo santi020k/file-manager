@@ -1,10 +1,11 @@
 'use client'
 
-import { IconBrandGoogleDrive, IconCheckbox, IconFileUpload, IconLogout, IconX } from '@tabler/icons-react'
+import { IconBrandGoogleDrive, IconCheckbox, IconLogout, IconX } from '@tabler/icons-react'
 import Image from 'next/image'
 import Button, { ButtonVariants } from '@/atoms/button/button'
 import Separator from '@/atoms/separator/separator'
 import SelectedOptions from '@/molecules/selected-options/selected-options'
+import DialogFileUpload from '@/organisms/dialog-file-upload/dialog-file-upload'
 import useBatchStore from '@/store/useBatchStore'
 
 const Header = () => {
@@ -25,10 +26,7 @@ const Header = () => {
                 Drive
                 <IconBrandGoogleDrive stroke={1} size={18} className="ml-1" />
               </Button>
-              <Button variant={ButtonVariants.Secondary}>
-                Upload
-                <IconFileUpload stroke={1} size={18} className="ml-1" />
-              </Button>
+              <DialogFileUpload />
             </>
           )}
           {batch.isOpen

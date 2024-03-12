@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import Button from '@/atoms/button/button'
-import { Input } from '@/atoms/input/input'
+import Input from '@/atoms/input/input'
 import Form, {
   FormControl,
   FormDescription,
