@@ -31,8 +31,8 @@ export function UserAuthForm ({ className, ...props }: UserAuthFormProps) {
       className
     )} {...props}>
       <Button variant="outline" type="button" onClick={handleClick} disabled={isLoading}>
-        {isLoading && <IconLoader2 stroke={1} className='mr-1 animate-spin' />}
-        {!isLoading && <IconBrandGmail stroke={1} className='mr-1' />}
+        {isLoading && <IconLoader2 stroke={1} className="mr-1 animate-spin" />}
+        {!isLoading && <IconBrandGmail stroke={1} className="mr-1" />}
         Google
       </Button>
     </div>

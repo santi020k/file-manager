@@ -2,8 +2,8 @@ import { IconBrandGoogleDrive, IconCheckbox, IconFileUpload } from '@tabler/icon
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Button from '@/atoms/button/button'
-import Gallery from '@/atoms/gallery/gallery'
 import Separator from '@/atoms/separator/separator'
+import Gallery from '@/components/organisms/gallery/gallery'
 
 export const metadata: Metadata = {
   title: 'Playground',
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const Dashboard = () => (
   <main className="flex h-screen max-h-screen flex-col">
     {/* Header */}
-    <header className='fixed z-20 w-screen bg-white'>
+    <header className="fixed z-20 w-screen bg-white">
       <div className="container flex flex-col items-start justify-between space-y-2 py-4 sm:flex-row sm:items-center sm:space-y-0 md:h-16">
         <div className="">
           <div className="relative h-10 w-48">
@@ -23,15 +23,15 @@ const Dashboard = () => (
         {/* TODO: Process */}
         <div className="ml-auto flex w-full space-x-2 sm:justify-end">
           <Button variant="secondary">
-            <IconCheckbox stroke={1} size={18} className='mr-1' />
+            <IconCheckbox stroke={1} size={18} className="mr-1" />
               Batch
           </Button>
           <Button variant="secondary">
-            <IconBrandGoogleDrive stroke={1} size={18} className='mr-1' />
+            <IconBrandGoogleDrive stroke={1} size={18} className="mr-1" />
               Drive
           </Button>
           <Button variant="secondary">
-            <IconFileUpload stroke={1} size={18} className='mr-1' />
+            <IconFileUpload stroke={1} size={18} className="mr-1" />
               Upload
           </Button>
         </div>
@@ -40,7 +40,7 @@ const Dashboard = () => (
     </header>
 
     <div defaultValue="complete" className="flex-1">
-      <div className="container h-full py-6">
+      <div className="container h-screen py-6 pt-[89px]">
         <div className="grid h-full items-stretch gap-6 md:grid-cols-[1fr_200px]">
           {/* Sidebar */}
           <aside className="flex flex-col space-y-4 md:order-2">
@@ -53,10 +53,8 @@ const Dashboard = () => (
           </aside>
 
           {/* Content */}
-          <section className="md:order-1">
-            <div className="mt-0 border-0 p-0">
-              <Gallery />
-            </div>
+          <section className="overflow-auto md:order-1">
+            <Gallery />
           </section>
         </div>
       </div>
