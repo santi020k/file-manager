@@ -1,4 +1,3 @@
-import { CopyIcon } from '@radix-ui/react-icons'
 import { IconFileUpload } from '@tabler/icons-react'
 import Button, { ButtonVariants } from '@/atoms/button/button'
 import Dialog, {
@@ -53,27 +52,20 @@ const DialogFileUpload = () => {
         </DialogHeader>
         <div className="flex items-center space-x-2">
           <div className="grid flex-1 gap-2">
-            <Label htmlFor="link" className="sr-only">
-              Link
+            <Label htmlFor="upload" className="sr-only">
+              Upload
             </Label>
             <Input
-              id="link"
+              id="upload"
               type="file"
               onChange={uploadImage}
             />
           </div>
           <Button type="submit" size="sm" className="px-3">
             <span className="sr-only">Upload</span>
-            <CopyIcon className="size-4" />
+            <IconFileUpload stroke={1} size={18} />
           </Button>
         </div>
-        {/* <DialogFooter className="sm:justify-start">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Close
-            </Button>
-          </DialogClose>
-        </DialogFooter> */}
       </DialogContent>
     </Dialog>
   )

@@ -1,10 +1,11 @@
 'use client'
 
-import { IconBrandGoogleDrive, IconCheckbox, IconLogout, IconX } from '@tabler/icons-react'
+import { IconCheckbox, IconLogout, IconX } from '@tabler/icons-react'
 import Image from 'next/image'
 import Button, { ButtonVariants } from '@/atoms/button/button'
 import Separator from '@/atoms/separator/separator'
 import SelectedOptions from '@/molecules/selected-options/selected-options'
+import DialogDrive from '@/organisms/dialog-drive/dialog-drive'
 import DialogFileUpload from '@/organisms/dialog-file-upload/dialog-file-upload'
 import useBatchStore from '@/store/useBatchStore'
 
@@ -22,10 +23,7 @@ const Header = () => {
         <div className="ml-auto flex w-full flex-wrap justify-center gap-2 sm:justify-end">
           {!batch.isOpen && (
             <>
-              <Button variant={ButtonVariants.Secondary}>
-                Drive
-                <IconBrandGoogleDrive stroke={1} size={18} className="ml-1" />
-              </Button>
+              <DialogDrive />
               <DialogFileUpload />
             </>
           )}
