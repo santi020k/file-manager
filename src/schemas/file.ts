@@ -5,7 +5,7 @@ const fileFormSchema = z.object({
     .max(50),
   url: z.string().min(2),
   type: z.string().min(1),
-  project: z.string().min(2)
+  folder: z.string().min(2)
 })
 
 export {

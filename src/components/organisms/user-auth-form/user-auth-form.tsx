@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 
-import { IconBrandGmail, IconLoader2 } from '@tabler/icons-react'
+import { IconBrandGoogleFilled, IconLoader2 } from '@tabler/icons-react'
 import Button from '@/atoms/button/button'
 import { cn } from '@/lib/utils'
 
@@ -32,7 +32,7 @@ export function UserAuthForm ({ className, ...props }: UserAuthFormProps) {
     )} {...props}>
       <Button variant="outline" type="button" onClick={handleClick} disabled={isLoading}>
         {isLoading && <IconLoader2 stroke={1} className="mr-1 animate-spin" />}
-        {!isLoading && <IconBrandGmail stroke={1} className="mr-1" />}
+        {!isLoading && <IconBrandGoogleFilled size={16} className="mr-1" />}
         Google
       </Button>
     </div>

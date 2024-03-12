@@ -6,6 +6,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import Button from '@/atoms/button/button'
 import Input from '@/atoms/input/input'
+import Select, {
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/atoms/select/select'
 import Form, {
   FormControl,
   FormDescription,
@@ -23,7 +29,7 @@ const FileForm = () => {
       name: '',
       url: '',
       type: '',
-      project: ''
+      folder: ''
     }
   })
 
@@ -84,15 +90,24 @@ const FileForm = () => {
         />
         <FormField
           control={form.control}
-          name="project"
+          name="folder"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Private Documents" {...field} />
-              </FormControl>
+              <FormLabel>Folders</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a Folder" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="private">Private Documents</SelectItem>
+                  <SelectItem value="public">Public Documents</SelectItem>
+                  <SelectItem value="drive">Google Drive</SelectItem>
+                </SelectContent>
+              </Select>
               <FormDescription>
-                This is the project of the file.
+                Whether you want to store them in a public repository, keep them private, or seamlessly integrate them with your Google Drive projects
               </FormDescription>
               <FormMessage />
             </FormItem>

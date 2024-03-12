@@ -18,7 +18,8 @@ const SelectedOptions: React.FC<SelectedOptionsProps> = () => (
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent>
-      <DropdownMenuItem>Move</DropdownMenuItem>
+      {/* TODO: Maybe i don't have the time to implement this */}
+      {/* <DropdownMenuItem>Move</DropdownMenuItem> */}
       <DropdownMenuItem>Delete</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
