@@ -1,9 +1,12 @@
 'use client'
 
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { IconCheckbox, IconLogout, IconX } from '@tabler/icons-react'
 import Image from 'next/image'
+import { redirect } from 'next/navigation'
 import Button, { ButtonVariants } from '@/atoms/button/button'
 import Separator from '@/atoms/separator/separator'
+import type { Database } from '@/lib/database.types'
 import SelectedOptions from '@/molecules/selected-options/selected-options'
 import DialogDrive from '@/organisms/dialog-drive/dialog-drive'
 import DialogFileUpload from '@/organisms/dialog-file-upload/dialog-file-upload'
@@ -12,6 +15,19 @@ import useBatchStore from '@/store/useBatchStore'
 const Header = () => {
   const batch = useBatchStore(state => state.batch)
   const { toggleBatch } = useBatchStore(state => state)
+  const supabase = createClientComponentClient<Database>()
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      console.error(
+        '🚀 ~ handleLogout ~ error:',
+        error
+      )
+    } else {
+      redirect('/login')
+    }
+  }
 
   return (
     <header className="fixed z-40 w-screen bg-white">
@@ -43,7 +59,7 @@ const Header = () => {
                 <IconCheckbox stroke={1} size={18} className="ml-1" />
               </Button>
             )}
-          <Button variant={ButtonVariants.Secondary} onClick={() => {}}>
+          <Button variant={ButtonVariants.Secondary} onClick={() => handleLogout()}>
             Logout
             <IconLogout stroke={1} size={18} className="ml-1" />
           </Button>
