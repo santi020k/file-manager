@@ -13,10 +13,12 @@ import Label from '@/atoms/label/label'
 
 const DialogFileUpload = () => {
   async function uploadImage (event: React.ChangeEvent<HTMLInputElement>) {
-    // const file = event?.target?.files?.[0]
+    // TODO: Process logic pending
+    const file = event?.target?.files?.[0]
     console.log(
       '🚀 ~ uploadImage ~ file:',
-      event
+      event,
+      file
     )
 
     // const { data, error } = await supabase

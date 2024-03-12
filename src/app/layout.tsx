@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
+import ErrorBoundary from '@/molecules/error-boundary/error-boundary'
 
 import './globals.css'
 
@@ -44,7 +45,11 @@ export default function RootLayout ({
       <meta name="msapplication-config" content="/favicons/browserconfig.xml" />
       <meta name="theme-color" content="#31363f" />
 
-      <body className={`${poppins.variable} prose max-w-none font-sans antialiased`}>{children}</body>
+      <body className={`${poppins.variable} prose max-w-none font-sans antialiased`}>
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
+      </body>
     </html>
   )
 }
