@@ -1,4 +1,4 @@
-import { IconDotsCircleHorizontal } from '@tabler/icons-react'
+import { IconTextCaption } from '@tabler/icons-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,22 +7,19 @@ import {
 } from '@/atoms/dropdown/dropdown'
 import Button from '@/components/atoms/button/button'
 
-interface SelectedOptionsProps {
-  onCancel: () => void
-}
+interface SelectedOptionsProps {}
 
-const SelectedOptions: React.FC<SelectedOptionsProps> = ({ onCancel }) => (
+const SelectedOptions: React.FC<SelectedOptionsProps> = () => (
   <DropdownMenu>
     <DropdownMenuTrigger>
       <Button variant="secondary">
-        <IconDotsCircleHorizontal stroke={1} size={18} className="mr-1" />
         Options
+        <IconTextCaption stroke={1} size={18} className="ml-1" />
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent>
       <DropdownMenuItem>Move</DropdownMenuItem>
       <DropdownMenuItem>Delete</DropdownMenuItem>
-      <DropdownMenuItem onClick={onCancel}>Cancel</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 )

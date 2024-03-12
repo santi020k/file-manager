@@ -31,7 +31,7 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
               <Checkbox checked={isSelected} />
             </Badge>
           )}
-          <Image fill className="m-0 h-auto max-w-full rounded-t-lg" sizes="100vw" src={img} alt={title || description || 'gallery image'} />
+          <Image fill className="m-0 h-auto max-w-full rounded-t-sm" sizes="100vw" src={img} alt={title || description || 'gallery image'} />
           <Link href={img} target="_blank" className="cursor-pointer" onClick={event => event.stopPropagation()}>
             <Badge className="absolute right-2 top-2 z-20 p-1">
               <IconExternalLink stroke={1} />

@@ -1,6 +1,6 @@
 'use client'
 
-import { IconBrandGoogleDrive, IconCheckbox, IconFileUpload } from '@tabler/icons-react'
+import { IconBrandGoogleDrive, IconCheckbox, IconFileUpload, IconLogout, IconX } from '@tabler/icons-react'
 import Image from 'next/image'
 import Button from '@/atoms/button/button'
 import Separator from '@/atoms/separator/separator'
@@ -12,33 +12,45 @@ const Header = () => {
   const { toggleBatch } = useBatchStore(state => state)
 
   return (
-    <header className="fixed z-20 w-screen bg-white">
-      <div className="container flex flex-col items-start justify-between space-y-2 py-4 sm:flex-row sm:items-center sm:space-y-0 md:h-16">
+    <header className="fixed z-40 w-screen bg-white">
+      <div className="container flex flex-col items-start justify-between space-y-2 px-2 py-4 sm:flex-row sm:items-center sm:space-y-0 sm:px-8 md:h-16">
         <div className="relative h-10 w-48">
           <Image className="m-0" fill src="/assets/logos/logo-dark.svg" alt="logo" />
         </div>
 
-        <div className="ml-auto flex w-full space-x-2 sm:justify-end">
+        <div className="ml-auto flex w-full flex-wrap justify-center gap-2 sm:justify-end">
           {!batch.isOpen && (
             <>
               <Button variant="secondary">
-                <IconBrandGoogleDrive stroke={1} size={18} className="mr-1" />
                 Drive
+                <IconBrandGoogleDrive stroke={1} size={18} className="ml-1" />
               </Button>
               <Button variant="secondary">
-                <IconFileUpload stroke={1} size={18} className="mr-1" />
                 Upload
+                <IconFileUpload stroke={1} size={18} className="ml-1" />
               </Button>
             </>
           )}
           {batch.isOpen
-            ? (<SelectedOptions onCancel={toggleBatch} />)
+            ? (
+              <>
+                <SelectedOptions />
+                <Button variant="secondary" onClick={toggleBatch}>
+                  Cancel
+                  <IconX stroke={1} size={18} className="ml-1" />
+                </Button>
+              </>
+            )
             : (
               <Button variant="secondary" onClick={toggleBatch}>
-                <IconCheckbox stroke={1} size={18} className="mr-1" />
                 Batch
+                <IconCheckbox stroke={1} size={18} className="ml-1" />
               </Button>
             )}
+          <Button variant="secondary" onClick={() => {}}>
+            Logout
+            <IconLogout stroke={1} size={18} className="ml-1" />
+          </Button>
         </div>
       </div>
       <Separator />
