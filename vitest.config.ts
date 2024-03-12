@@ -25,6 +25,10 @@ export default defineConfig({
       '@/organisms': path.resolve(
         __dirname,
         './src/components/organisms'
+      ),
+      '@/lib': path.resolve(
+        __dirname,
+        './src/lib'
       )
     }
   }

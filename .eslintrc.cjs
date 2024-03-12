@@ -47,6 +47,7 @@ module.exports = {
     'unused-imports/no-unused-imports': 'error',
     'testing-library/prefer-screen-queries': 0,
     'testing-library/no-manual-cleanup': 0,
+    indent: 0,
     '@stylistic/indent': [
       'error',
       2

@@ -1,39 +1,63 @@
-import { fireEvent, render } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { cleanup, render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import Button, { types } from './button'
+import Button from './button'
 
 describe(
   'Button component',
   () => {
+    afterEach(() => {
+      cleanup()
+    })
+
     it(
-      'renders primary button correctly',
+      'renders button with given text',
       () => {
-        const { getByText } = render(<Button onClick={() => { }} type={types.primary}>Primary Button</Button>)
-        const button = getByText('Primary Button')
+        const { getByRole } = render(<Button>Click me</Button>)
+        const button = getByRole(
+          'button',
+          { name: /click me/i }
+        )
         expect(button).toBeInTheDocument()
-        expect(button.getAttribute('class')).toContain(types.primary)
       }
     )
 
     it(
-      'renders secondary button correctly',
-      () => {
-        const { getByText } = render(<Button onClick={() => { }} type={types.secondary}>Secondary Button</Button>)
-        const button = getByText('Secondary Button')
-        expect(button).toBeInTheDocument()
-        expect(button.getAttribute('class')).toContain('secondary')
-      }
-    )
-
-    it(
-      'triggers onClick handler',
-      () => {
+      'calls onClick handler when clicked',
+      async () => {
         const onClickMock = vi.fn()
-        const { getByText } = render(<Button onClick={onClickMock} type={types.primary}>Click Me</Button>)
-        const button = getByText('Click Me')
-        fireEvent.click(button)
-        expect(onClickMock).toHaveBeenCalled()
+        const { getByRole } = render(<Button onClick={onClickMock}>Click me</Button>)
+        const button = getByRole(
+          'button',
+          { name: /click me/i }
+        )
+        await userEvent.click(button)
+        expect(onClickMock).toHaveBeenCalledTimes(1)
+      }
+    )
+
+    it(
+      'applies correct className based on variant prop',
+      () => {
+        const { getByRole } = render(<Button variant="secondary">Secondary Button</Button>)
+        const button = getByRole(
+          'button',
+          { name: /secondary button/i }
+        )
+        expect(button).toHaveClass('bg-secondary')
+      }
+    )
+
+    it(
+      'applies correct className based on size prop',
+      () => {
+        const { getByRole } = render(<Button size="lg">Large Button</Button>)
+        const button = getByRole(
+          'button',
+          { name: /large button/i }
+        )
+        expect(button).toHaveClass('h-10')
       }
     )
   }
