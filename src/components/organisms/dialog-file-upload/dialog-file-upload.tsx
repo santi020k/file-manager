@@ -56,14 +56,7 @@ const DialogFileUpload = () => {
     if (!file) return false
     setIsLoading(true)
     const isBigFile = file.size > 500000000
-    startProgress({
-      start: isBigFile
-        ? 10
-        : 30,
-      increases: isBigFile
-        ? 5
-        : 30
-    })
+    startProgress({ start: isBigFile ? 10 : 30, increases: isBigFile ? 5 : 30 })
 
     const { data, error } = await supabase
       .storage

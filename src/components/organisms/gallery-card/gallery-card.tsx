@@ -30,7 +30,6 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
     <Card onClick={handleClick} {...restProps}>
       <CardContent className="border-b p-0">
         <div className="relative aspect-square h-auto max-w-full">
-          {/* TODO: Pending to implement */}
           {isBatchOpen && (
             <Badge variant="secondary" className="absolute left-2 top-2 z-20 cursor-pointer p-2" onClick={handleClick}>
               <Checkbox checked={isSelected} />

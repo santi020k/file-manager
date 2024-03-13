@@ -89,6 +89,10 @@ module.exports = {
       'error',
       { allowAllPropertiesOnSameLine: true }
     ],
+    '@stylistic/multiline-ternary': [
+      'error',
+      'always-multiline'
+    ],
     '@stylistic/member-delimiter-style': 'off',
     '@stylistic/no-extra-parens': 'off',
     'simple-import-sort/imports': [

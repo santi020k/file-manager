@@ -37,6 +37,7 @@ const ListStorages = () => {
   } else if (edit?.media?.url.split('/').includes(ByOptions.Drive)) {
     folder = ByOptions.Drive
   }
+
   const formInitialValues = useMemo(() => ({
     name: edit?.media?.name ?? '',
     url: edit?.media?.url ?? '',
