@@ -3,8 +3,6 @@
 import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import Button from '@/atoms/button/button'
 import Input from '@/atoms/input/input'
 import Select, {
@@ -13,9 +11,7 @@ import Select, {
   SelectTrigger,
   SelectValue
 } from '@/atoms/select/select'
-import useMedia, { ByOptions } from '@/hooks/use-media'
-import useMessages from '@/hooks/use-messages'
-import supabaseClient from '@/lib/supabase/supabaseClient'
+
 import Form, {
   FormControl,
   FormDescription,
@@ -24,8 +20,17 @@ import Form, {
   FormLabel,
   FormMessage
 } from '@/molecules/form/form'
-import { fileFormSchema } from '@/schemas/file'
+
+import supabaseClient from '@/lib/supabase/supabaseClient'
+
 import useUserStore from '@/store/use-user-store'
+
+import useMedia, { ByOptions } from '@/hooks/use-media'
+import useMessages from '@/hooks/use-messages'
+
+import { fileFormSchema } from '@/schemas/file'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 
 export interface InitialValues {
   name?: string
@@ -54,18 +59,12 @@ const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
 
   const form = useForm<z.infer<typeof fileFormSchema>>({
     resolver: zodResolver(fileFormSchema),
-    defaultValues: useMemo(
-      () => initialValues ?? defaultForm,
-      [initialValues]
-    )
+    defaultValues: useMemo(() => initialValues ?? defaultForm, [initialValues])
   })
 
-  useEffect(
-    () => {
-      form.reset(initialValues)
-    },
-    [initialValues]
-  )
+  useEffect(() => {
+    form.reset(initialValues)
+  }, [initialValues])
 
   // TODO: Refactor
   const onSubmit = async (values: z.infer<typeof fileFormSchema>) => {
@@ -77,10 +76,7 @@ const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
     const { data } = await supabase
       .storage
       .from('uploads')
-      .move(
-        oldDirection,
-        newDirection
-      )
+      .move(oldDirection, newDirection)
 
     if (data) {
       successMessage()

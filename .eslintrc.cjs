@@ -81,6 +81,18 @@ module.exports = {
       'error',
       'property'
     ],
+    '@stylistic/function-call-argument-newline': [
+      'error',
+      'never'
+    ],
+    '@stylistic/object-property-newline': [
+      'error',
+      { allowAllPropertiesOnSameLine: true }
+    ],
+    '@stylistic/multiline-ternary': [
+      'error',
+      'always-multiline'
+    ],
     '@stylistic/member-delimiter-style': 'off',
     '@stylistic/no-extra-parens': 'off',
     'simple-import-sort/imports': [
@@ -89,24 +101,25 @@ module.exports = {
         groups: [
           // Packages `react` related packages come first.
           ['^react'],
+          ['^next'],
           // Libs Packages
-          [
-            '^@?\\w',
-            '^(@|components)(/.*|$)'
-          ],
+          // [
+          //   '^@?\\w',
+          //   '^(@|components)(/.*|$)'
+          // ],
           // Themes
-          ['^(@themes)'],
+          ['^(@/themes)'],
           // Internal packages.
-          ['^(@atoms)(/.*|$)'],
-          ['^(@molecules)(/.*|$)'],
-          ['^(@organisms)(/.*|$)'],
-          ['^(@layouts)(/.*|$)'],
-          ['^(@libs)(/.*|$)'],
-          ['^(@store)(/.*|$)'],
-          ['^(@hooks)(/.*|$)'],
-          ['^(@models)(/.*|$)'],
-          ['^(@utils)(/.*|$)'],
-          ['^(@mocks)(/.*|$)'],
+          ['^(@/atoms)(/.*|$)'],
+          ['^(@/molecules)(/.*|$)'],
+          ['^(@/organisms)(/.*|$)'],
+          ['^(@/layouts)(/.*|$)'],
+          ['^(@/lib)(/.*|$)'],
+          ['^(@/store)(/.*|$)'],
+          ['^(@/hooks)(/.*|$)'],
+          ['^(@/models)(/.*|$)'],
+          ['^(@/utils)(/.*|$)'],
+          ['^(@/mocks)(/.*|$)'],
           // Side effect imports.
           ['^\\u0000'],
           // Parent imports. Put `..` last.

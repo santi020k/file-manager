@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
+
 import ErrorBoundary from '@/molecules/error-boundary/error-boundary'
 import Toaster from '@/molecules/toaster/toaster'
 
@@ -24,8 +25,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: 'File Manager',
-  // TODO: improve description
-  description: 'File manager Description'
+  description: 'File manager Open Source Project'
 }
 
 export default function RootLayout ({
@@ -35,7 +35,6 @@ export default function RootLayout ({
 }>) {
   return (
     <html lang="en">
-      {/* TODO: Temporal Location */}
       <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
       <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
       <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />

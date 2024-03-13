@@ -1,4 +1,3 @@
-import { IconBrandGoogleDrive } from '@tabler/icons-react'
 import Button, { ButtonVariants } from '@/atoms/button/button'
 import Dialog, {
   DialogContent,
@@ -7,7 +6,10 @@ import Dialog, {
   DialogTitle,
   DialogTrigger
 } from '@/atoms/dialog/dialog'
+
 import useMessages from '@/hooks/use-messages'
+
+import { IconBrandGoogleDrive } from '@tabler/icons-react'
 
 const DialogFileUpload = () => {
   const { successMessage } = useMessages()
