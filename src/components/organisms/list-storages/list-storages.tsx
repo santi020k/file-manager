@@ -5,20 +5,13 @@ import { useMemo } from 'react'
 import { IconX } from '@tabler/icons-react'
 import Gallery from '@/components/organisms/gallery/gallery'
 import { ByOptions, type Media } from '@/hooks/use-media'
-import useMedias from '@/hooks/use-medias'
 import { cn } from '@/lib/utils'
 import FileForm from '@/organisms/file-form/file-form'
 import useEditStore from '@/store/use-edit-store'
+import useMediasStore from '@/store/use-medias-store'
 
 const ListStorages = () => {
-  const {
-    mediasDocument,
-    isLoadingDocument,
-    mediasPrivate,
-    isLoadingPrivate,
-    mediasDrive,
-    isLoadingDrive
-  } = useMedias()
+  const medias = useMediasStore(state => state.medias)
   const edit = useEditStore(state => state.edit)
   const { openEdit, closeEdit } = useEditStore(state => state)
 
@@ -75,15 +68,15 @@ const ListStorages = () => {
 
         <div>
           <section className="p-6 pb-16 md:order-1">
-            <Gallery title="Documents" medias={mediasDocument} onEdit={handleEdit} isLoading={isLoadingDocument} />
+            <Gallery title="Documents" medias={medias[ByOptions.Documents].medias} onEdit={handleEdit} isLoading={medias[ByOptions.Documents].isLoading} />
           </section>
 
           <section className="p-6 pb-16 md:order-1">
-            <Gallery title="Private Documents" medias={mediasPrivate} onEdit={handleEdit} isLoading={isLoadingPrivate} />
+            <Gallery title="Private Documents" medias={medias[ByOptions.Privates].medias} onEdit={handleEdit} isLoading={medias[ByOptions.Privates].isLoading} />
           </section>
 
           <section className="p-6 pb-16 md:order-1">
-            <Gallery title="Drive" medias={mediasDrive} onEdit={handleEdit} isLoading={isLoadingDrive} />
+            <Gallery title="Drive" medias={medias[ByOptions.Drive].medias} onEdit={handleEdit} isLoading={medias[ByOptions.Drive].isLoading} />
           </section>
         </div>
       </div>

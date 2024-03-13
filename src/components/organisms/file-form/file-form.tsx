@@ -12,8 +12,7 @@ import Select, {
   SelectTrigger,
   SelectValue
 } from '@/atoms/select/select'
-import { ByOptions } from '@/hooks/use-media'
-import useMedias from '@/hooks/use-medias'
+import useMedia, { ByOptions } from '@/hooks/use-media'
 import useMessages from '@/hooks/use-messages'
 import useUser from '@/hooks/use-user'
 import supabaseClient from '@/lib/supabase/supabaseClient'
@@ -48,7 +47,7 @@ const defaultForm = {
 const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
   const { user } = useUser()
   const { errorMessage, successMessage } = useMessages()
-  const { getMediasDocument, getMediasPrivate, getMediasDrive } = useMedias()
+  const { getMedias } = useMedia()
 
   const supabase = supabaseClient()
 
@@ -75,9 +74,9 @@ const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
     if (data) {
       successMessage()
       // TODO: improve with new js pattern matching, no need to update everything
-      getMediasDocument()
-      getMediasPrivate()
-      getMediasDrive()
+      getMedias(ByOptions.Documents)
+      getMedias(ByOptions.Privates)
+      getMedias(ByOptions.Drive)
     } else {
       errorMessage(() => onSubmit(values))
     }

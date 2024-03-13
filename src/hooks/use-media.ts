@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import useMessages from '@/hooks/use-messages'
+import useUser from '@/hooks/use-user'
 import supabaseClient, { FileObject, User } from '@/lib/supabase/supabaseClient'
+import useMediasStore from '@/store/use-medias-store'
 
 export enum ByOptions {
   Documents = 'documents',
@@ -13,24 +15,23 @@ export interface Media extends FileObject {
   url: string
 }
 
-const useMedia = (user: User, by?: string) => {
-  const [
-    medias,
-    setMedias
-  ] = useState<Media[]>([])
-  const [
-    isLoading,
-    setIsLoading
-  ] = useState<boolean>(true)
+// TODO: Separate into two hook
+const useMedia = () => {
+  const { user } = useUser()
+  const medias = useMediasStore(state => state.medias)
+  const isLoading = useMediasStore(state => state.isLoading)
+
+  const { onUpdateMedias, onStartLoading } = useMediasStore(state => state)
+
   const { errorMessage } = useMessages()
 
   const supabase = supabaseClient()
 
-  const addUrl = async (files: FileObject[]) => {
+  const addUrl = async (files: FileObject[], thisBy: ByOptions) => {
     let temporalMedias: Media[] = []
     await Promise.allSettled(files.map(file => (
       supabase.storage.from('uploads').createSignedUrl(
-        `${user?.id}/${by ?? ByOptions.Documents}/${file.name}`,
+        `${user?.id}/${thisBy}/${file.name}`,
         3600
       )
         .then(({ data }) => {
@@ -44,13 +45,16 @@ const useMedia = (user: User, by?: string) => {
         })
     )))
 
-    setMedias(temporalMedias)
+    onUpdateMedias(
+      thisBy,
+      temporalMedias
+    )
   }
 
-  const getMedias = async () => {
-    setIsLoading(true)
+  const getMedias = async (thisBy: ByOptions) => {
+    onStartLoading(thisBy)
     const { data: files, error } = await supabase.storage.from('uploads').list(
-      `${user?.id}/${by ?? ByOptions.Documents}/`,
+      `${user?.id}/${thisBy ?? ByOptions.Documents}/`,
       {
         // TODO: Add pagination or infinite scroll (Future)
         limit: 9999,
@@ -63,19 +67,22 @@ const useMedia = (user: User, by?: string) => {
     )
 
     if (files) {
-      await addUrl(files)
+      await addUrl(
+        files,
+        thisBy
+      )
     } else {
-      errorMessage(getMedias)
+      errorMessage(() => getMedias(thisBy))
       console.error(error)
     }
-
-    setIsLoading(false)
   }
 
   useEffect(
     () => {
-      if (user) {
-        getMedias()
+      if (user && medias.documents.isLoading) {
+        getMedias(ByOptions.Documents)
+        getMedias(ByOptions.Privates)
+        getMedias(ByOptions.Drive)
       }
     },
     [user]
@@ -83,7 +90,9 @@ const useMedia = (user: User, by?: string) => {
 
   return {
     isLoading,
-    medias,
+    mediasDocuments: medias[ByOptions.Documents],
+    mediasPrivates: medias[ByOptions.Privates],
+    mediasDrive: medias[ByOptions.Drive],
     getMedias
   }
 }

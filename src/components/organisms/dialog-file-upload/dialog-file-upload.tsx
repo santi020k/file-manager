@@ -14,10 +14,10 @@ import Dialog, {
 import Input from '@/atoms/input/input'
 import Label from '@/atoms/label/label'
 import Progress from '@/atoms/progress/progress'
-import useMedia from '@/hooks/use-media'
+import useMedia, { ByOptions } from '@/hooks/use-media'
 import useMessages from '@/hooks/use-messages'
 import useProgress from '@/hooks/use-progress'
-import useUser, { type User } from '@/hooks/use-user'
+import useUser from '@/hooks/use-user'
 import supabaseClient from '@/lib/supabase/supabaseClient'
 
 const DialogFileUpload = () => {
@@ -31,7 +31,7 @@ const DialogFileUpload = () => {
   ] = useState(false)
   const { user } = useUser()
   const refInput = useRef<HTMLInputElement | null>(null)
-  const { getMedias } = useMedia(user as User)
+  const { getMedias } = useMedia()
   const { errorMessage, successMessage } = useMessages()
   const { progress, startProgress, endProgress } = useProgress()
 
@@ -70,7 +70,7 @@ const DialogFileUpload = () => {
       )
 
     if (data) {
-      getMedias()
+      getMedias(ByOptions.Documents)
       reset()
       successMessage('File successfully uploaded')
     } else {

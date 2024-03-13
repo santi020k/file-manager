@@ -1,23 +1,38 @@
 import { create } from 'zustand'
 import { ByOptions, type Media } from '@/hooks/use-media'
 
+interface MediaStore {
+  medias: Media[]
+  isLoading: boolean
+}
+
 interface Medias {
-  [ByOptions.Documents]: Media[]
-  [ByOptions.Privates]: Media[]
-  [ByOptions.Drive]: Media[]
+  [ByOptions.Documents]: MediaStore
+  [ByOptions.Privates]: MediaStore
+  [ByOptions.Drive]: MediaStore
 }
 
 interface MediasState {
   medias: Medias
   isLoading: boolean
   onUpdateMedias: (type: ByOptions, medias: Media[]) => void
+  onStartLoading: (type: ByOptions) => void
 }
 
 // TODO: Improve this for scalability
 const initialState = {
-  [ByOptions.Documents]: [],
-  [ByOptions.Privates]: [],
-  [ByOptions.Drive]: []
+  documents: {
+    isLoading: true,
+    medias: []
+  },
+  privates: {
+    isLoading: true,
+    medias: []
+  },
+  drive: {
+    isLoading: true,
+    medias: []
+  }
 }
 
 const useMediasStore = create<MediasState>()(set => ({
@@ -26,9 +41,20 @@ const useMediasStore = create<MediasState>()(set => ({
   onUpdateMedias: (type, medias) => set(state => ({
     medias: {
       ...state.medias,
-      [type]: medias
+      [type]: {
+        medias,
+        isLoading: false
+      }
     }
-  }))
+  })),
+  onStartLoading: type => set(state => (({
+    medias: {
+      ...state.medias,
+      [type]: {
+        isLoading: true
+      }
+    }
+  })))
 }))
 
 export default useMediasStore
