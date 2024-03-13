@@ -50,6 +50,12 @@ Go to the project directory
   cd file-manager
 ```
 
+Copy .env and add your own variables
+
+```bash
+  cp .env.local.example .env.local
+```
+
 Install dependencies
 
 ```bash

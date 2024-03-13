@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -12,6 +13,9 @@ import Select, {
   SelectTrigger,
   SelectValue
 } from '@/atoms/select/select'
+import useMedia, { ByOptions } from '@/hooks/use-media'
+import useMessages from '@/hooks/use-messages'
+import supabaseClient from '@/lib/supabase/supabaseClient'
 import Form, {
   FormControl,
   FormDescription,
@@ -21,20 +25,74 @@ import Form, {
   FormMessage
 } from '@/molecules/form/form'
 import { fileFormSchema } from '@/schemas/file'
+import useUserStore from '@/store/use-user-store'
 
-const FileForm = () => {
+export interface InitialValues {
+  name?: string
+  url?: string
+  type?: string
+  folder?: string
+}
+
+export interface FileFormProps {
+  initialValues?: InitialValues
+}
+
+const defaultForm = {
+  name: '',
+  url: '',
+  type: '',
+  folder: ''
+}
+
+const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
+  const user = useUserStore(state => state.user)
+  const { errorMessage, successMessage } = useMessages()
+  const { getMedias } = useMedia()
+
+  const supabase = supabaseClient()
+
   const form = useForm<z.infer<typeof fileFormSchema>>({
     resolver: zodResolver(fileFormSchema),
-    defaultValues: {
-      name: '',
-      url: '',
-      type: '',
-      folder: ''
-    }
+    defaultValues: useMemo(
+      () => initialValues ?? defaultForm,
+      [initialValues]
+    )
   })
 
-  function onSubmit (values: z.infer<typeof fileFormSchema>) {
-    console.log(values)
+  useEffect(
+    () => {
+      form.reset(initialValues)
+    },
+    [initialValues]
+  )
+
+  // TODO: Refactor
+  const onSubmit = async (values: z.infer<typeof fileFormSchema>) => {
+    if (initialValues?.folder === values.folder) return false
+
+    const oldDirection = `${user?.id}/${initialValues?.folder ?? ByOptions.Documents}/${values.name}`
+    const newDirection = `${user?.id}/${values.folder ?? ByOptions.Documents}/${values.name}`
+
+    const { data } = await supabase
+      .storage
+      .from('uploads')
+      .move(
+        oldDirection,
+        newDirection
+      )
+
+    if (data) {
+      successMessage()
+      // TODO: improve with new js pattern matching, no need to update everything
+      getMedias(ByOptions.Documents)
+      getMedias(ByOptions.Privates)
+      getMedias(ByOptions.Drive)
+      return true
+    } else {
+      errorMessage(() => onSubmit(values))
+      return false
+    }
   }
 
   return (
@@ -94,16 +152,16 @@ const FileForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Folders</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a Folder" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="private">Private Documents</SelectItem>
-                  <SelectItem value="public">Public Documents</SelectItem>
-                  <SelectItem value="drive">Google Drive</SelectItem>
+                  <SelectItem value={ByOptions.Documents}>Documents</SelectItem>
+                  <SelectItem value={ByOptions.Privates}>Private Documents</SelectItem>
+                  <SelectItem value={ByOptions.Drive}>Google Drive</SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription>

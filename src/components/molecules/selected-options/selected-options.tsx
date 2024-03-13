@@ -6,10 +6,13 @@ import {
   DropdownMenuTrigger
 } from '@/atoms/dropdown/dropdown'
 import Button from '@/components/atoms/button/button'
+import DialogConfirm from '@/molecules/dialog-confirm/dialog-confirm'
 
-interface SelectedOptionsProps {}
+interface SelectedOptionsProps {
+  onDelete: () => void
+}
 
-const SelectedOptions: React.FC<SelectedOptionsProps> = () => (
+const SelectedOptions: React.FC<SelectedOptionsProps> = ({ onDelete }) => (
   <DropdownMenu>
     <DropdownMenuTrigger>
       <Button variant="secondary">
@@ -20,7 +23,9 @@ const SelectedOptions: React.FC<SelectedOptionsProps> = () => (
     <DropdownMenuContent>
       {/* TODO: Maybe i don't have the time to implement this */}
       {/* <DropdownMenuItem>Move</DropdownMenuItem> */}
-      <DropdownMenuItem>Delete</DropdownMenuItem>
+      <DropdownMenuItem>
+        <DialogConfirm onConfirm={onDelete} />
+      </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 )

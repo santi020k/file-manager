@@ -2,13 +2,13 @@ import { create } from 'zustand'
 
 interface Batch {
   isOpen: boolean
-  selected: number[]
+  selected: string[]
 }
 
 interface BatchState {
   batch: Batch
   toggleBatch: () => void
-  handleSelected: (id: number) => void
+  handleSelected: (id: string) => void
 }
 
 const initialState = {

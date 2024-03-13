@@ -7,8 +7,15 @@ import Dialog, {
   DialogTitle,
   DialogTrigger
 } from '@/atoms/dialog/dialog'
+import useMessages from '@/hooks/use-messages'
 
 const DialogFileUpload = () => {
+  const { successMessage } = useMessages()
+
+  const handleGoogleDrive = () => {
+    successMessage('Coming soon')
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -26,7 +33,7 @@ const DialogFileUpload = () => {
         </DialogHeader>
         <div className="flex items-center space-x-2">
           <div className="grid flex-1 gap-2">
-            <Button className="px-3">
+            <Button className="px-3" onClick={handleGoogleDrive}>
               Google Drive
               <IconBrandGoogleDrive stroke={1} size={18} className="ml-1" />
             </Button>

@@ -1,28 +1,58 @@
 'use client'
 
+import { useEffect, useMemo } from 'react'
+
 import { IconX } from '@tabler/icons-react'
-import { Metadata } from 'next'
 import Gallery from '@/components/organisms/gallery/gallery'
+import useMedia, { ByOptions, type Media } from '@/hooks/use-media'
+import useUser from '@/hooks/use-user'
 import { cn } from '@/lib/utils'
 import FileForm from '@/organisms/file-form/file-form'
-import useEditStore from '@/store/useEditStore'
+import useEditStore from '@/store/use-edit-store'
+import useMediasStore from '@/store/use-medias-store'
 
-export const metadata: Metadata = {
-  title: 'Playground',
-  description: 'The OpenAI Playground built using the components.'
-}
-
-const Dashboard = () => {
+const ListStorages = () => {
+  const medias = useMediasStore(state => state.medias)
   const edit = useEditStore(state => state.edit)
   const { openEdit, closeEdit } = useEditStore(state => state)
+  const { getMedias } = useMedia()
+  const { user } = useUser()
 
-  const handleEdit = (id?: number) => {
-    if (id && id !== edit.id) {
-      openEdit(id)
+  const handleEdit = (media?: Media) => {
+    if (media?.id && media.id !== edit?.media?.id) {
+      openEdit(media)
     } else {
       closeEdit()
     }
   }
+
+  // TODO: Move this
+  let folder = ByOptions.Documents
+  if (edit?.media?.url.split('/').includes(ByOptions.Privates)) {
+    folder = ByOptions.Privates
+  } else if (edit?.media?.url.split('/').includes(ByOptions.Drive)) {
+    folder = ByOptions.Drive
+  }
+  const formInitialValues = useMemo(
+    () => ({
+      name: edit?.media?.name ?? '',
+      url: edit?.media?.url ?? '',
+      type: edit?.media?.metadata?.mimetype?.split('/')?.[0] ?? '',
+      folder
+    }),
+    [edit?.media]
+  )
+
+  useEffect(
+    () => {
+      if (user) {
+        getMedias(ByOptions.Documents)
+        getMedias(ByOptions.Privates)
+        getMedias(ByOptions.Drive)
+      }
+    },
+    [user]
+  )
 
   return (
     <div className="container overflow-x-hidden px-0 pt-[160px] sm:overflow-x-visible sm:pt-[65px]">
@@ -40,22 +70,31 @@ const Dashboard = () => {
               <h3 className="m-0">
                   Edit
               </h3>
-              <div className="flex size-8 cursor-pointer items-center justify-center" onClick={() => handleEdit()}>
+              <div className="flex size-8 cursor-pointer items-center justify-center" onClick={closeEdit}>
                 <IconX stroke={1} size={18} />
               </div>
             </div>
 
-            <FileForm />
+            {edit.isOpen && <FileForm initialValues={formInitialValues} />}
 
           </div>
         </aside>
 
-        {/* Content */}
-        <section className="p-6 pb-16 md:order-1">
-          <Gallery onEdit={handleEdit} />
-        </section>
+        <div>
+          <section className="p-6 pb-16 md:order-1">
+            <Gallery title="Documents" medias={medias[ByOptions.Documents].medias} onEdit={handleEdit} isLoading={medias[ByOptions.Documents].isLoading} byOption={ByOptions.Documents} />
+          </section>
+
+          <section className="p-6 pb-16 md:order-1">
+            <Gallery title="Private Documents" medias={medias[ByOptions.Privates].medias} onEdit={handleEdit} isLoading={medias[ByOptions.Privates].isLoading} byOption={ByOptions.Privates} />
+          </section>
+
+          <section className="p-6 pb-16 md:order-1">
+            <Gallery title="Drive" medias={medias[ByOptions.Drive].medias} onEdit={handleEdit} isLoading={medias[ByOptions.Drive].isLoading} byOption={ByOptions.Drive} />
+          </section>
+        </div>
       </div>
     </div>
   )
 }
-export default Dashboard
+export default ListStorages

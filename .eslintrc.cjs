@@ -48,6 +48,7 @@ module.exports = {
     'testing-library/prefer-screen-queries': 0,
     'testing-library/no-manual-cleanup': 0,
     indent: 0,
+    'react-hooks/exhaustive-deps': 0,
     '@stylistic/indent': [
       'error',
       2

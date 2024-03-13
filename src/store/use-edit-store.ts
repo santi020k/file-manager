@@ -1,13 +1,14 @@
 import { create } from 'zustand'
+import { type Media } from '@/hooks/use-media'
 
 interface Edit {
   isOpen: boolean
-  id?: number
+  media?: Media
 }
 
 interface EditState {
   edit: Edit
-  openEdit: (id: number) => void
+  openEdit: (media: Media) => void
   closeEdit: () => void
 }
 
@@ -15,16 +16,16 @@ const initialState = { isOpen: false }
 
 const useEditStore = create<EditState>()(set => ({
   edit: initialState,
-  openEdit: id => set(() => ({
+  openEdit: media => set(() => ({
     edit: {
       isOpen: true,
-      id
+      media
     }
   })),
   closeEdit: () => set(() => ({
     edit: {
       isOpen: false,
-      id: undefined
+      media: undefined
     }
   }))
 }))
