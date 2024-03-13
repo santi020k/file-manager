@@ -1,19 +1,22 @@
 import SectionTitle from '@/atoms/section-title/section-title'
 import GalleryCard from '@/components/organisms/gallery-card/gallery-card'
-import { type Media } from '@/hooks/use-media'
+import { ByOptions, type Media } from '@/hooks/use-media'
 import { cn } from '@/lib/utils'
 import SkeletonCard from '@/molecules/skeleton-card/skeleton-card'
 import useBatchStore from '@/store/use-batch-store'
 import useEditStore from '@/store/use-edit-store'
+import useUserStore from '@/store/use-user-store'
 
 interface GalleryProps {
   onEdit: (media?: Media) => void
   title?: string
   medias?: Media[]
   isLoading: boolean
+  byOption: ByOptions
 }
 
-const Gallery: React.FC<GalleryProps> = ({ onEdit, title, medias, isLoading }) => {
+const Gallery: React.FC<GalleryProps> = ({ onEdit, title, medias, isLoading, byOption }) => {
+  const user = useUserStore(state => state.user)
   const edit = useEditStore(state => state.edit)
   const batch = useBatchStore(state => state.batch)
   const { handleSelected } = useBatchStore(state => state)
@@ -78,9 +81,9 @@ const Gallery: React.FC<GalleryProps> = ({ onEdit, title, medias, isLoading }) =
           return (
             <GalleryCard
               onClick={() => onEdit(media)}
-              onSelected={() => handleSelected(id)}
+              onSelected={() => handleSelected(`${user?.id}/${byOption}/${name}`)}
               isBatchOpen={batch.isOpen}
-              isSelected={!!batch.selected.find(item => item === id)}
+              isSelected={!!batch.selected.find(item => item === `${user?.id}/${byOption}/${name}`)}
               key={id}
               description={name}
               file={url}

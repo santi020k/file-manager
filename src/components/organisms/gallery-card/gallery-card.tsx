@@ -16,14 +16,9 @@ import { type GalleryCardProps } from './gallery-card.types'
 const GalleryCard: React.FC<GalleryCardProps> = ({
   title, description, file, footer, onSelected, isSelected, isBatchOpen, format, type, onClick, ...restProps
 }) => {
-  const handleSelected = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.stopPropagation()
-    onSelected()
-  }
-
   const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (isBatchOpen) {
-      handleSelected(event)
+      onSelected()
     } else {
       onClick?.(event)
     }
@@ -35,7 +30,7 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
         <div className="relative aspect-square h-auto max-w-full">
           {/* TODO: Pending to implement */}
           {isBatchOpen && (
-            <Badge variant="secondary" className="absolute left-2 top-2 z-20 cursor-pointer p-2" onClick={handleSelected}>
+            <Badge variant="secondary" className="absolute left-2 top-2 z-20 cursor-pointer p-2" onClick={handleClick}>
               <Checkbox checked={isSelected} />
             </Badge>
           )}

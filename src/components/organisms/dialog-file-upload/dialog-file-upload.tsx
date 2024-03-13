@@ -17,8 +17,8 @@ import Progress from '@/atoms/progress/progress'
 import useMedia, { ByOptions } from '@/hooks/use-media'
 import useMessages from '@/hooks/use-messages'
 import useProgress from '@/hooks/use-progress'
-import useUser from '@/hooks/use-user'
 import supabaseClient from '@/lib/supabase/supabaseClient'
+import useUserStore from '@/store/use-user-store'
 
 const DialogFileUpload = () => {
   const [
@@ -29,7 +29,7 @@ const DialogFileUpload = () => {
     isLoading,
     setIsLoading
   ] = useState(false)
-  const { user } = useUser()
+  const user = useUserStore(state => state.user)
   const refInput = useRef<HTMLInputElement | null>(null)
   const { getMedias } = useMedia()
   const { errorMessage, successMessage } = useMessages()

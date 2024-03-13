@@ -1,30 +1,22 @@
-import { useEffect, useState } from 'react'
-
 import supabaseClient, { User } from '@/lib/supabase/supabaseClient'
+import useUserStore from '@/store/use-user-store'
 
+// TODO: move to store
 const useUser = () => {
-  const [
-    user,
-    setUser
-  ] = useState<User>()
+  const user = useUserStore(state => state.user)
+  const { onSaveUser, isLoading, onStartLoading } = useUserStore(state => state)
+
   const supabase = supabaseClient()
 
-  useEffect(
-    () => {
-      const getUser = async () => {
-        const { data: { user } } = await supabase.auth.getUser()
-        if (user) {
-          setUser(user)
-        } else {
-          setUser(undefined)
-        }
-      }
-      getUser()
-    },
-    // TODO: fix Later
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
+  const getUser = async () => {
+    onStartLoading()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (user) {
+      onSaveUser(user)
+    }
+  }
+
+  if (!isLoading && !user) getUser()
 
   return { user }
 }

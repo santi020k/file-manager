@@ -14,7 +14,6 @@ interface Medias {
 
 interface MediasState {
   medias: Medias
-  isLoading: boolean
   onUpdateMedias: (type: ByOptions, medias: Media[]) => void
   onStartLoading: (type: ByOptions) => void
 }
@@ -37,7 +36,6 @@ const initialState = {
 
 const useMediasStore = create<MediasState>()(set => ({
   medias: initialState,
-  isLoading: true,
   onUpdateMedias: (type, medias) => set(state => ({
     medias: {
       ...state.medias,

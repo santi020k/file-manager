@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
+import Header from '@/components/organisms/header/header'
 import supabaseServer from '@/lib/supabase/supabaseServer'
-import Header from '@/molecules/header/header'
 import ListStorages from '@/organisms/list-storages/list-storages'
 
 export const metadata: Metadata = {

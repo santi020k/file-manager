@@ -1,9 +1,7 @@
-import { useEffect } from 'react'
-
 import useMessages from '@/hooks/use-messages'
-import useUser from '@/hooks/use-user'
 import supabaseClient, { FileObject, User } from '@/lib/supabase/supabaseClient'
 import useMediasStore from '@/store/use-medias-store'
+import useUserStore from '@/store/use-user-store'
 
 export enum ByOptions {
   Documents = 'documents',
@@ -17,9 +15,8 @@ export interface Media extends FileObject {
 
 // TODO: Separate into two hook
 const useMedia = () => {
-  const { user } = useUser()
+  const user = useUserStore(state => state.user)
   const medias = useMediasStore(state => state.medias)
-  const isLoading = useMediasStore(state => state.isLoading)
 
   const { onUpdateMedias, onStartLoading } = useMediasStore(state => state)
 
@@ -77,19 +74,7 @@ const useMedia = () => {
     }
   }
 
-  useEffect(
-    () => {
-      if (user && medias.documents.isLoading) {
-        getMedias(ByOptions.Documents)
-        getMedias(ByOptions.Privates)
-        getMedias(ByOptions.Drive)
-      }
-    },
-    [user]
-  )
-
   return {
-    isLoading,
     mediasDocuments: medias[ByOptions.Documents],
     mediasPrivates: medias[ByOptions.Privates],
     mediasDrive: medias[ByOptions.Drive],

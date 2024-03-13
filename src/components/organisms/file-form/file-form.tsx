@@ -15,7 +15,6 @@ import Select, {
 } from '@/atoms/select/select'
 import useMedia, { ByOptions } from '@/hooks/use-media'
 import useMessages from '@/hooks/use-messages'
-import useUser from '@/hooks/use-user'
 import supabaseClient from '@/lib/supabase/supabaseClient'
 import Form, {
   FormControl,
@@ -26,6 +25,7 @@ import Form, {
   FormMessage
 } from '@/molecules/form/form'
 import { fileFormSchema } from '@/schemas/file'
+import useUserStore from '@/store/use-user-store'
 
 export interface InitialValues {
   name?: string
@@ -46,7 +46,7 @@ const defaultForm = {
 }
 
 const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
-  const { user } = useUser()
+  const user = useUserStore(state => state.user)
   const { errorMessage, successMessage } = useMessages()
   const { getMedias } = useMedia()
 
@@ -88,11 +88,11 @@ const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
       getMedias(ByOptions.Documents)
       getMedias(ByOptions.Privates)
       getMedias(ByOptions.Drive)
+      return true
     } else {
       errorMessage(() => onSubmit(values))
+      return false
     }
-
-    return true
   }
 
   return (

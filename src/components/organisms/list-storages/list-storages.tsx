@@ -1,10 +1,11 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { IconX } from '@tabler/icons-react'
 import Gallery from '@/components/organisms/gallery/gallery'
-import { ByOptions, type Media } from '@/hooks/use-media'
+import useMedia, { ByOptions, type Media } from '@/hooks/use-media'
+import useUser from '@/hooks/use-user'
 import { cn } from '@/lib/utils'
 import FileForm from '@/organisms/file-form/file-form'
 import useEditStore from '@/store/use-edit-store'
@@ -14,6 +15,8 @@ const ListStorages = () => {
   const medias = useMediasStore(state => state.medias)
   const edit = useEditStore(state => state.edit)
   const { openEdit, closeEdit } = useEditStore(state => state)
+  const { getMedias } = useMedia()
+  const { user } = useUser()
 
   const handleEdit = (media?: Media) => {
     if (media?.id && media.id !== edit?.media?.id) {
@@ -38,6 +41,17 @@ const ListStorages = () => {
       folder
     }),
     [edit?.media]
+  )
+
+  useEffect(
+    () => {
+      if (user) {
+        getMedias(ByOptions.Documents)
+        getMedias(ByOptions.Privates)
+        getMedias(ByOptions.Drive)
+      }
+    },
+    [user]
   )
 
   return (
@@ -68,15 +82,15 @@ const ListStorages = () => {
 
         <div>
           <section className="p-6 pb-16 md:order-1">
-            <Gallery title="Documents" medias={medias[ByOptions.Documents].medias} onEdit={handleEdit} isLoading={medias[ByOptions.Documents].isLoading} />
+            <Gallery title="Documents" medias={medias[ByOptions.Documents].medias} onEdit={handleEdit} isLoading={medias[ByOptions.Documents].isLoading} byOption={ByOptions.Documents} />
           </section>
 
           <section className="p-6 pb-16 md:order-1">
-            <Gallery title="Private Documents" medias={medias[ByOptions.Privates].medias} onEdit={handleEdit} isLoading={medias[ByOptions.Privates].isLoading} />
+            <Gallery title="Private Documents" medias={medias[ByOptions.Privates].medias} onEdit={handleEdit} isLoading={medias[ByOptions.Privates].isLoading} byOption={ByOptions.Privates} />
           </section>
 
           <section className="p-6 pb-16 md:order-1">
-            <Gallery title="Drive" medias={medias[ByOptions.Drive].medias} onEdit={handleEdit} isLoading={medias[ByOptions.Drive].isLoading} />
+            <Gallery title="Drive" medias={medias[ByOptions.Drive].medias} onEdit={handleEdit} isLoading={medias[ByOptions.Drive].isLoading} byOption={ByOptions.Drive} />
           </section>
         </div>
       </div>
