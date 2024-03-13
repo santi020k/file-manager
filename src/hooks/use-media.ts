@@ -28,19 +28,21 @@ const useMedia = (user: User, by?: string) => {
 
   const addUrl = async (files: FileObject[]) => {
     let temporalMedias: Media[] = []
-    for (const file of files) {
-      const { data } = await supabase.storage.from('uploads').createSignedUrl(
+    await Promise.allSettled(files.map(file => (
+      supabase.storage.from('uploads').createSignedUrl(
         `${user?.id}/${by ?? ByOptions.Documents}/${file.name}`,
         3600
       )
-      temporalMedias = [
-        ...temporalMedias,
-        {
-          ...file,
-          url: data?.signedUrl ?? ''
-        }
-      ]
-    }
+        .then(({ data }) => {
+          temporalMedias = [
+            ...temporalMedias,
+            {
+              ...file,
+              url: data?.signedUrl ?? ''
+            }
+          ]
+        })
+    )))
 
     setMedias(temporalMedias)
   }
@@ -50,7 +52,8 @@ const useMedia = (user: User, by?: string) => {
     const { data: files, error } = await supabase.storage.from('uploads').list(
       `${user?.id}/${by ?? ByOptions.Documents}/`,
       {
-        limit: 10,
+        // TODO: Add pagination or infinite scroll (Future)
+        limit: 9999,
         offset: 0,
         sortBy: {
           column: 'name',

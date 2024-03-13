@@ -41,7 +41,7 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
           )}
           {type === 'image'
             ? (
-              <Image fill className="m-0 h-auto max-w-full rounded-t-sm" sizes="100vw" src={file} alt={title || description || 'gallery image'} />
+              <Image fill className="m-0 h-auto max-w-full rounded-t-sm object-cover object-center" sizes="320px" src={file} alt={title || description || 'gallery image'} />
             )
             : (
               <h4 className="m-0 flex h-full max-w-full items-center justify-center rounded-t-sm bg-[#76ABAE] text-6xl text-white">{format.toUpperCase()}</h4>
