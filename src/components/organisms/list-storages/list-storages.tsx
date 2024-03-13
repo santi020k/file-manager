@@ -16,9 +16,17 @@ export const metadata: Metadata = {
 
 const Dashboard = () => {
   const { user } = useUser()
-  const { medias: mediasDocument } = useMedia(
+  const { medias: mediasDocument, isLoading: isLoadingDocument } = useMedia(
     user as User,
     ByOptions.Documents
+  )
+  const { medias: mediasPrivate, isLoading: isLoadingPrivate } = useMedia(
+    user as User,
+    ByOptions.Privates
+  )
+  const { medias: mediasDrive, isLoading: isLoadingDrive } = useMedia(
+    user as User,
+    ByOptions.Drive
   )
   const edit = useEditStore(state => state.edit)
   const { openEdit, closeEdit } = useEditStore(state => state)
@@ -57,10 +65,20 @@ const Dashboard = () => {
           </div>
         </aside>
 
-        {/* Content */}
-        <section className="p-6 pb-16 md:order-1">
-          <Gallery title="Documents" medias={mediasDocument} onEdit={handleEdit} />
-        </section>
+        <div>
+          {/* Content */}
+          <section className="p-6 pb-16 md:order-1">
+            <Gallery title="Documents" medias={mediasDocument} onEdit={handleEdit} isLoading={isLoadingDocument} />
+          </section>
+
+          <section className="p-6 pb-16 md:order-1">
+            <Gallery title="Private Documents" medias={mediasPrivate} onEdit={handleEdit} isLoading={isLoadingPrivate} />
+          </section>
+
+          <section className="p-6 pb-16 md:order-1">
+            <Gallery title="Drive" medias={mediasDrive} onEdit={handleEdit} isLoading={isLoadingDrive} />
+          </section>
+        </div>
       </div>
     </div>
   )

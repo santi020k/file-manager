@@ -18,6 +18,10 @@ const useMedia = (user: User, by?: string) => {
     medias,
     setMedias
   ] = useState<Media[]>([])
+  const [
+    isLoading,
+    setIsLoading
+  ] = useState<boolean>(true)
   const { errorMessage } = useMessages()
 
   const supabase = supabaseClient()
@@ -42,6 +46,7 @@ const useMedia = (user: User, by?: string) => {
   }
 
   const getMedias = async () => {
+    setIsLoading(true)
     const { data: files, error } = await supabase.storage.from('uploads').list(
       `${user?.id}/${by ?? ByOptions.Documents}/`,
       {
@@ -55,11 +60,13 @@ const useMedia = (user: User, by?: string) => {
     )
 
     if (files) {
-      addUrl(files)
+      await addUrl(files)
     } else {
       errorMessage(getMedias)
       console.error(error)
     }
+
+    setIsLoading(false)
   }
 
   useEffect(
@@ -72,6 +79,7 @@ const useMedia = (user: User, by?: string) => {
   )
 
   return {
+    isLoading,
     medias,
     getMedias
   }
