@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -53,8 +54,18 @@ const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
 
   const form = useForm<z.infer<typeof fileFormSchema>>({
     resolver: zodResolver(fileFormSchema),
-    defaultValues: initialValues ?? defaultForm
+    defaultValues: useMemo(
+      () => initialValues ?? defaultForm,
+      [initialValues]
+    )
   })
+
+  useEffect(
+    () => {
+      form.reset(initialValues)
+    },
+    [initialValues]
+  )
 
   // TODO: Refactor
   const onSubmit = async (values: z.infer<typeof fileFormSchema>) => {
@@ -141,7 +152,7 @@ const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Folders</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a Folder" />
