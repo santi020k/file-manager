@@ -1,11 +1,9 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { UserAuthForm } from '@/components/organisms/user-auth-form/user-auth-form'
-import type { Database } from '@/lib/database.types'
+import supabaseServer from '@/lib/supabase/supabaseServer'
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -13,7 +11,7 @@ export const metadata: Metadata = {
 }
 
 const LoginPage = async () => {
-  const supabase = createServerComponentClient<Database>({ cookies })
+  const supabase = supabaseServer()
 
   const {
     data: { session }

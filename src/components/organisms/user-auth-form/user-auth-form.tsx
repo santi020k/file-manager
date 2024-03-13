@@ -2,12 +2,11 @@
 
 import * as React from 'react'
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { IconBrandGoogleFilled, IconLoader2 } from '@tabler/icons-react'
 import Button from '@/atoms/button/button'
 import { ToastAction, ToasterVariants } from '@/atoms/toast/toast'
 import useToast from '@/hooks/use-toast'
-import type { Database } from '@/lib/database.types'
+import supabaseClient from '@/lib/supabase/supabaseClient'
 import { cn } from '@/lib/utils'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -19,7 +18,7 @@ export function UserAuthForm ({ className, ...props }: UserAuthFormProps) {
   ] = React.useState<boolean>(false)
   const { toast } = useToast()
 
-  const supabase = createClientComponentClient<Database>()
+  const supabase = supabaseClient()
 
   const handleGoogleOAuth = async () => {
     setIsLoading(true)

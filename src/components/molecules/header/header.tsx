@@ -1,6 +1,5 @@
 'use client'
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { IconCheckbox, IconLogout, IconX } from '@tabler/icons-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -8,7 +7,7 @@ import Button, { ButtonVariants } from '@/atoms/button/button'
 import Separator from '@/atoms/separator/separator'
 import { ToastAction, ToasterVariants } from '@/atoms/toast/toast'
 import useToast from '@/hooks/use-toast'
-import type { Database } from '@/lib/database.types'
+import supabaseClient from '@/lib/supabase/supabaseClient'
 import SelectedOptions from '@/molecules/selected-options/selected-options'
 import DialogDrive from '@/organisms/dialog-drive/dialog-drive'
 import DialogFileUpload from '@/organisms/dialog-file-upload/dialog-file-upload'
@@ -17,7 +16,7 @@ import useBatchStore from '@/store/useBatchStore'
 const Header = () => {
   const batch = useBatchStore(state => state.batch)
   const { toggleBatch } = useBatchStore(state => state)
-  const supabase = createClientComponentClient<Database>()
+  const supabase = supabaseClient()
   const { toast } = useToast()
   const router = useRouter()
 
