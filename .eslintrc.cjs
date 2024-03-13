@@ -93,8 +93,6 @@ module.exports = {
             '^@?\\w',
             '^(@|components)(/.*|$)'
           ],
-          // I18n
-          ['^(@i18n)'],
           // Themes
           ['^(@themes)'],
           // Internal packages.

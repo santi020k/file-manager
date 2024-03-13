@@ -12,8 +12,7 @@ export const metadata: Metadata = {
 }
 
 const Dashboard = async () => {
-  const cookieStore = cookies()
-  const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
+  const supabase = createServerComponentClient<Database>({ cookies })
   const {
     data: { session }
   } = await supabase.auth.getSession()

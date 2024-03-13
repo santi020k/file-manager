@@ -3,9 +3,11 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { IconCheckbox, IconLogout, IconX } from '@tabler/icons-react'
 import Image from 'next/image'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Button, { ButtonVariants } from '@/atoms/button/button'
 import Separator from '@/atoms/separator/separator'
+import { ToastAction, ToasterVariants } from '@/atoms/toast/toast'
+import useToast from '@/hooks/use-toast'
 import type { Database } from '@/lib/database.types'
 import SelectedOptions from '@/molecules/selected-options/selected-options'
 import DialogDrive from '@/organisms/dialog-drive/dialog-drive'
@@ -16,16 +18,20 @@ const Header = () => {
   const batch = useBatchStore(state => state.batch)
   const { toggleBatch } = useBatchStore(state => state)
   const supabase = createClientComponentClient<Database>()
+  const { toast } = useToast()
+  const router = useRouter()
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut()
     if (error) {
-      console.error(
-        '🚀 ~ handleLogout ~ error:',
-        error
-      )
+      toast({
+        variant: ToasterVariants.Destructive,
+        title: 'Uh oh! Something went wrong.',
+        description: 'There was a problem with your request.',
+        action: <ToastAction onClick={handleLogout} altText="Try again">Try again</ToastAction>
+      })
     } else {
-      redirect('/login')
+      router.push('/login')
     }
   }
 
@@ -59,7 +65,7 @@ const Header = () => {
                 <IconCheckbox stroke={1} size={18} className="ml-1" />
               </Button>
             )}
-          <Button variant={ButtonVariants.Secondary} onClick={() => handleLogout()}>
+          <Button variant={ButtonVariants.Secondary} onClick={handleLogout}>
             Logout
             <IconLogout stroke={1} size={18} className="ml-1" />
           </Button>
