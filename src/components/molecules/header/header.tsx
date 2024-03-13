@@ -2,8 +2,12 @@
 
 import { IconCheckbox, IconLogout, IconX } from '@tabler/icons-react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import Button, { ButtonVariants } from '@/atoms/button/button'
 import Separator from '@/atoms/separator/separator'
+import { ToastAction, ToasterVariants } from '@/atoms/toast/toast'
+import useToast from '@/hooks/use-toast'
+import supabaseClient from '@/lib/supabase/supabaseClient'
 import SelectedOptions from '@/molecules/selected-options/selected-options'
 import DialogDrive from '@/organisms/dialog-drive/dialog-drive'
 import DialogFileUpload from '@/organisms/dialog-file-upload/dialog-file-upload'
@@ -12,6 +16,23 @@ import useBatchStore from '@/store/useBatchStore'
 const Header = () => {
   const batch = useBatchStore(state => state.batch)
   const { toggleBatch } = useBatchStore(state => state)
+  const supabase = supabaseClient()
+  const { toast } = useToast()
+  const router = useRouter()
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      toast({
+        variant: ToasterVariants.Destructive,
+        title: 'Uh oh! Something went wrong.',
+        description: 'There was a problem with your request.',
+        action: <ToastAction onClick={handleLogout} altText="Try again">Try again</ToastAction>
+      })
+    } else {
+      router.push('/login')
+    }
+  }
 
   return (
     <header className="fixed z-40 w-screen bg-white">
@@ -43,7 +64,7 @@ const Header = () => {
                 <IconCheckbox stroke={1} size={18} className="ml-1" />
               </Button>
             )}
-          <Button variant={ButtonVariants.Secondary} onClick={() => {}}>
+          <Button variant={ButtonVariants.Secondary} onClick={handleLogout}>
             Logout
             <IconLogout stroke={1} size={18} className="ml-1" />
           </Button>

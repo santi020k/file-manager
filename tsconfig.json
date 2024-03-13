@@ -25,6 +25,7 @@
       "@/store/*": ["./src/store/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/schemas/*": ["./src/schemas/*"],
+      "@/hooks/*": ["./src/hooks/*"],
     },
     "types": ["@testing-library/jest-dom"]
   },

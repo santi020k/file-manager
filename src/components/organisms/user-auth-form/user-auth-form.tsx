@@ -4,6 +4,9 @@ import * as React from 'react'
 
 import { IconBrandGoogleFilled, IconLoader2 } from '@tabler/icons-react'
 import Button from '@/atoms/button/button'
+import { ToastAction, ToasterVariants } from '@/atoms/toast/toast'
+import useToast from '@/hooks/use-toast'
+import supabaseClient from '@/lib/supabase/supabaseClient'
 import { cn } from '@/lib/utils'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -13,16 +16,33 @@ export function UserAuthForm ({ className, ...props }: UserAuthFormProps) {
     isLoading,
     setIsLoading
   ] = React.useState<boolean>(false)
+  const { toast } = useToast()
 
-  const handleClick = () => {
+  const supabase = supabaseClient()
+
+  const handleGoogleOAuth = async () => {
     setIsLoading(true)
 
-    setTimeout(
-      () => {
-        setIsLoading(false)
-      },
-      3000
-    )
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent'
+        }
+      }
+    }) ?? { error: undefined }
+
+    if (error) {
+      setIsLoading(false)
+      toast({
+        variant: ToasterVariants.Destructive,
+        title: 'Uh oh! Something went wrong.',
+        description: 'There was a problem with your request.',
+        action: <ToastAction onClick={handleGoogleOAuth} altText="Try again">Try again</ToastAction>
+      })
+    }
   }
 
   return (
@@ -30,7 +50,7 @@ export function UserAuthForm ({ className, ...props }: UserAuthFormProps) {
       'grid gap-6',
       className
     )} {...props}>
-      <Button variant="outline" type="button" onClick={handleClick} disabled={isLoading}>
+      <Button variant="outline" type="button" onClick={handleGoogleOAuth} disabled={isLoading}>
         {isLoading && <IconLoader2 stroke={1} className="mr-1 animate-spin" />}
         {!isLoading && <IconBrandGoogleFilled size={16} className="mr-1" />}
         Google
