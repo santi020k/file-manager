@@ -3,8 +3,8 @@ import GalleryCard from '@/components/organisms/gallery-card/gallery-card'
 import { type Media } from '@/hooks/use-media'
 import { cn } from '@/lib/utils'
 import SkeletonCard from '@/molecules/skeleton-card/skeleton-card'
-import useBatchStore from '@/store/useBatchStore'
-import useEditStore from '@/store/useEditStore'
+import useBatchStore from '@/store/use-batch-store'
+import useEditStore from '@/store/use-edit-store'
 
 interface GalleryProps {
   onEdit: (media?: Media) => void

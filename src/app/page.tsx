@@ -5,8 +5,8 @@ import Header from '@/molecules/header/header'
 import ListStorages from '@/organisms/list-storages/list-storages'
 
 export const metadata: Metadata = {
-  title: 'Playground',
-  description: 'The OpenAI Playground built using the components.'
+  title: 'Dashboard',
+  description: 'Discover unparalleled efficiency and insights with our intuitive dashboard'
 }
 
 const Dashboard = async () => {

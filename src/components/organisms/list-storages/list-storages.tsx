@@ -3,20 +3,14 @@
 import { useMemo } from 'react'
 
 import { IconX } from '@tabler/icons-react'
-import { Metadata } from 'next'
 import Gallery from '@/components/organisms/gallery/gallery'
 import { ByOptions, type Media } from '@/hooks/use-media'
 import useMedias from '@/hooks/use-medias'
 import { cn } from '@/lib/utils'
 import FileForm from '@/organisms/file-form/file-form'
-import useEditStore from '@/store/useEditStore'
+import useEditStore from '@/store/use-edit-store'
 
-export const metadata: Metadata = {
-  title: 'Playground',
-  description: 'The OpenAI Playground built using the components.'
-}
-
-const Dashboard = () => {
+const ListStorages = () => {
   const {
     mediasDocument,
     isLoadingDocument,
@@ -96,4 +90,4 @@ const Dashboard = () => {
     </div>
   )
 }
-export default Dashboard
+export default ListStorages

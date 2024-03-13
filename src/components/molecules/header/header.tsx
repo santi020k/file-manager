@@ -10,7 +10,7 @@ import supabaseClient from '@/lib/supabase/supabaseClient'
 import SelectedOptions from '@/molecules/selected-options/selected-options'
 import DialogDrive from '@/organisms/dialog-drive/dialog-drive'
 import DialogFileUpload from '@/organisms/dialog-file-upload/dialog-file-upload'
-import useBatchStore from '@/store/useBatchStore'
+import useBatchStore from '@/store/use-batch-store'
 
 const Header = () => {
   const batch = useBatchStore(state => state.batch)

@@ -48,7 +48,7 @@ const defaultForm = {
 const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
   const { user } = useUser()
   const { errorMessage, successMessage } = useMessages()
-  const { getMediasDocument, getMediasPrivate, getMediasDrive, mediasDocument, mediasDrive, mediasPrivate } = useMedias()
+  const { getMediasDocument, getMediasPrivate, getMediasDrive } = useMedias()
 
   const supabase = supabaseClient()
 
@@ -63,39 +63,6 @@ const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
 
     const oldDirection = `${user?.id}/${initialValues?.folder ?? ByOptions.Documents}/${values.name}`
     const newDirection = `${user?.id}/${values.folder ?? ByOptions.Documents}/${values.name}`
-
-    // TODO: Move and refactor, create folder with empty file prevent supabase error when moved
-    switch (values.folder) {
-      case ByOptions.Documents:
-        if (mediasDocument.length) {
-          await supabase.storage.from('uploads').upload(
-            `${ByOptions.Documents}/.keep.txt`,
-            ''
-          )
-        }
-        break
-
-      case ByOptions.Privates:
-        if (mediasDrive.length) {
-          await supabase.storage.from('uploads').upload(
-            `${ByOptions.Privates}/.keep.txt`,
-            ''
-          )
-        }
-        break
-
-      case ByOptions.Drive:
-        if (mediasPrivate.length) {
-          await supabase.storage.from('uploads').upload(
-            `${ByOptions.Documents}/.keep.txt`,
-            ''
-          )
-        }
-        break
-
-      default:
-        break
-    }
 
     const { data } = await supabase
       .storage
