@@ -8,10 +8,12 @@ import {
   useFormContext
 } from 'react-hook-form'
 
+import Label from '@/atoms/label/label'
+
+import { cn } from '@/lib/utils'
+
 import * as LabelPrimitive from '@radix-ui/react-label'
 import { Slot } from '@radix-ui/react-slot'
-import Label from '@/atoms/label/label'
-import { cn } from '@/lib/utils'
 
 const Form = FormProvider
 
@@ -42,10 +44,7 @@ const useFormField = () => {
   const itemContext = React.useContext(FormItemContext)
   const { getFieldState, formState } = useFormContext()
 
-  const fieldState = getFieldState(
-    fieldContext.name,
-    formState
-  )
+  const fieldState = getFieldState(fieldContext.name, formState)
 
   if (!fieldContext) {
     throw new Error('useFormField should be used within <FormField>')
@@ -77,10 +76,7 @@ const FormItem = React.forwardRef<
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div ref={ref} className={cn(
-        'space-y-2',
-        className
-      )} {...props} />
+      <div ref={ref} className={cn('space-y-2', className)} {...props} />
     </FormItemContext.Provider>
   )
 })
@@ -95,10 +91,7 @@ const FormLabel = React.forwardRef<
   return (
     <Label
       ref={ref}
-      className={cn(
-        error && 'text-destructive',
-        className
-      )}
+      className={cn(error && 'text-destructive', className)}
       htmlFor={formItemId}
       {...props}
     />
@@ -138,10 +131,7 @@ const FormDescription = React.forwardRef<
     <p
       ref={ref}
       id={formDescriptionId}
-      className={cn(
-        'text-[0.8rem] text-muted-foreground',
-        className
-      )}
+      className={cn('text-[0.8rem] text-muted-foreground', className)}
       {...props}
     />
   )
@@ -165,10 +155,7 @@ const FormMessage = React.forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn(
-        'text-[0.8rem] font-medium text-destructive',
-        className
-      )}
+      className={cn('text-[0.8rem] font-medium text-destructive', className)}
       {...props}
     >
       {body}

@@ -1,5 +1,6 @@
-import { create } from 'zustand'
 import { type Media } from '@/hooks/use-media'
+
+import { create } from 'zustand'
 
 interface Edit {
   isOpen: boolean

@@ -1,5 +1,6 @@
-import { create } from 'zustand'
 import { ByOptions, type Media } from '@/hooks/use-media'
+
+import { create } from 'zustand'
 
 interface MediaStore {
   medias: Media[]

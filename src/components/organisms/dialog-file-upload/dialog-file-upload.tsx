@@ -2,7 +2,6 @@
 
 import { useRef, useState } from 'react'
 
-import { IconFileUpload } from '@tabler/icons-react'
 import Button, { ButtonVariants } from '@/atoms/button/button'
 import Dialog, {
   DialogContent,
@@ -14,11 +13,16 @@ import Dialog, {
 import Input from '@/atoms/input/input'
 import Label from '@/atoms/label/label'
 import Progress from '@/atoms/progress/progress'
+
+import supabaseClient from '@/lib/supabase/supabaseClient'
+
+import useUserStore from '@/store/use-user-store'
+
 import useMedia, { ByOptions } from '@/hooks/use-media'
 import useMessages from '@/hooks/use-messages'
 import useProgress from '@/hooks/use-progress'
-import supabaseClient from '@/lib/supabase/supabaseClient'
-import useUserStore from '@/store/use-user-store'
+
+import { IconFileUpload } from '@tabler/icons-react'
 
 const DialogFileUpload = () => {
   const [
@@ -64,10 +68,7 @@ const DialogFileUpload = () => {
     const { data, error } = await supabase
       .storage
       .from('uploads')
-      .upload(
-        `${user?.id}/documents/${crypto.randomUUID()}-${file.name}`,
-        file
-      )
+      .upload(`${user?.id}/documents/${crypto.randomUUID()}-${file.name}`, file)
 
     if (data) {
       getMedias(ByOptions.Documents)

@@ -1,4 +1,3 @@
-import { IconTrash } from '@tabler/icons-react'
 import Button, { ButtonVariants } from '@/atoms/button/button'
 import Dialog, {
   DialogClose,
@@ -9,6 +8,8 @@ import Dialog, {
   DialogTitle,
   DialogTrigger
 } from '@/atoms/dialog/dialog'
+
+import { IconTrash } from '@tabler/icons-react'
 
 interface DialogConfirmProps {
   onConfirm: () => void

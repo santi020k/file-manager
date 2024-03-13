@@ -63,21 +63,15 @@ const addToRemoveQueue = (toastId: string) => {
     return
   }
 
-  const timeout = setTimeout(
-    () => {
-      toastTimeouts.delete(toastId)
-      dispatch({
-        type: 'REMOVE_TOAST',
-        toastId
-      })
-    },
-    TOAST_REMOVE_DELAY
-  )
+  const timeout = setTimeout(() => {
+    toastTimeouts.delete(toastId)
+    dispatch({
+      type: 'REMOVE_TOAST',
+      toastId
+    })
+  }, TOAST_REMOVE_DELAY)
 
-  toastTimeouts.set(
-    toastId,
-    timeout
-  )
+  toastTimeouts.set(toastId, timeout)
 }
 
 export const reducer = (state: State, action: Action): State => {
@@ -88,10 +82,7 @@ export const reducer = (state: State, action: Action): State => {
         toasts: [
           action.toast,
           ...state.toasts
-        ].slice(
-          0,
-          TOAST_LIMIT
-        )
+        ].slice(0, TOAST_LIMIT)
       }
 
     case 'UPDATE_TOAST':
@@ -147,10 +138,7 @@ const listeners: Array<(state: State) => void> = []
 let memoryState: State = { toasts: [] }
 
 function dispatch (action: Action) {
-  memoryState = reducer(
-    memoryState,
-    action
-  )
+  memoryState = reducer(memoryState, action)
   listeners.forEach(listener => {
     listener(memoryState)
   })
@@ -198,21 +186,15 @@ function useToast () {
     setState
   ] = React.useState<State>(memoryState)
 
-  React.useEffect(
-    () => {
-      listeners.push(setState)
-      return () => {
-        const index = listeners.indexOf(setState)
-        if (index > -1) {
-          listeners.splice(
-            index,
-            1
-          )
-        }
+  React.useEffect(() => {
+    listeners.push(setState)
+    return () => {
+      const index = listeners.indexOf(setState)
+      if (index > -1) {
+        listeners.splice(index, 1)
       }
-    },
-    [state]
-  )
+    }
+  }, [state])
 
   return {
     ...state,

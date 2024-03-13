@@ -2,8 +2,10 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { UserAuthForm } from '@/components/organisms/user-auth-form/user-auth-form'
+
 import supabaseServer from '@/lib/supabase/supabaseServer'
+
+import { UserAuthForm } from '@/components/organisms/user-auth-form/user-auth-form'
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -17,9 +19,7 @@ const LoginPage = async () => {
     data: { session }
   } = await supabase.auth.getSession()
 
-  if (session) {
-    redirect('/')
-  }
+  if (session) redirect('/')
 
   return (
     <main className="container relative grid h-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">

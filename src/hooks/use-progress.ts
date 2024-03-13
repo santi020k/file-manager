@@ -19,33 +19,24 @@ const useProgress = () => {
 
   const startProgress = ({ start, increases }: StartProgress) => {
     setProgress(start)
-    refInterval.current = setInterval(
-      () => {
-        setProgress(prev => (prev < 90
-          ? prev + increases
-          : prev))
-      },
-      1000
-    )
+    refInterval.current = setInterval(() => {
+      setProgress(prev => (prev < 90
+        ? prev + increases
+        : prev))
+    }, 1000)
   }
 
   const endProgress = () => {
     resetCounter()
     setProgress(100)
-    setTimeout(
-      () => {
-        setProgress(0)
-      },
-      1000
-    )
+    setTimeout(() => {
+      setProgress(0)
+    }, 1000)
   }
 
-  useEffect(
-    () => {
-      return endProgress
-    },
-    []
-  )
+  useEffect(() => {
+    return endProgress
+  }, [])
 
   return {
     progress,

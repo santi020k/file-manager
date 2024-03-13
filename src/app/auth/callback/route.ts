@@ -1,5 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
+
 import supabaseRoute from '@/lib/supabase/supabaseRoute'
 
 export async function GET (request: NextRequest) {

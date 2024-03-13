@@ -1,6 +1,6 @@
-import { IconExternalLink } from '@tabler/icons-react'
 import Image from 'next/image'
 import Link from 'next/link'
+
 import Badge from '@/atoms/badge/badge'
 import Card, {
   CardContent,
@@ -9,9 +9,11 @@ import Card, {
   CardHeader,
   CardTitle
 } from '@/atoms/card/card'
-import Checkbox from '@/components/atoms/checkbox/checkbox'
 
 import { type GalleryCardProps } from './gallery-card.types'
+
+import Checkbox from '@/components/atoms/checkbox/checkbox'
+import { IconExternalLink } from '@tabler/icons-react'
 
 const GalleryCard: React.FC<GalleryCardProps> = ({
   title, description, file, footer, onSelected, isSelected, isBatchOpen, format, type, onClick, ...restProps
