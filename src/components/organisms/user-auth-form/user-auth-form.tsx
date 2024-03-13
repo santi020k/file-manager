@@ -4,8 +4,7 @@ import * as React from 'react'
 
 import { IconBrandGoogleFilled, IconLoader2 } from '@tabler/icons-react'
 import Button from '@/atoms/button/button'
-import { ToastAction, ToasterVariants } from '@/atoms/toast/toast'
-import useToast from '@/hooks/use-toast'
+import useMessages from '@/hooks/use-messages'
 import supabaseClient from '@/lib/supabase/supabaseClient'
 import { cn } from '@/lib/utils'
 
@@ -16,7 +15,7 @@ export function UserAuthForm ({ className, ...props }: UserAuthFormProps) {
     isLoading,
     setIsLoading
   ] = React.useState<boolean>(false)
-  const { toast } = useToast()
+  const { errorMessage } = useMessages()
 
   const supabase = supabaseClient()
 
@@ -36,12 +35,7 @@ export function UserAuthForm ({ className, ...props }: UserAuthFormProps) {
 
     if (error) {
       setIsLoading(false)
-      toast({
-        variant: ToasterVariants.Destructive,
-        title: 'Uh oh! Something went wrong.',
-        description: 'There was a problem with your request.',
-        action: <ToastAction onClick={handleGoogleOAuth} altText="Try again">Try again</ToastAction>
-      })
+      errorMessage(handleGoogleOAuth)
     }
   }
 

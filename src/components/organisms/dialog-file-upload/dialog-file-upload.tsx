@@ -1,3 +1,7 @@
+'use client'
+
+import { useRef, useState } from 'react'
+
 import { IconFileUpload } from '@tabler/icons-react'
 import Button, { ButtonVariants } from '@/atoms/button/button'
 import Dialog, {
@@ -9,30 +13,75 @@ import Dialog, {
 } from '@/atoms/dialog/dialog'
 import Input from '@/atoms/input/input'
 import Label from '@/atoms/label/label'
+import Progress from '@/atoms/progress/progress'
+import useMedia from '@/hooks/use-media'
+import useMessages from '@/hooks/use-messages'
+import useProgress from '@/hooks/use-progress'
+import useUser, { type User } from '@/hooks/use-user'
+import supabaseClient from '@/lib/supabase/supabaseClient'
 
 const DialogFileUpload = () => {
-  async function uploadImage (event: React.ChangeEvent<HTMLInputElement>) {
-    // TODO: Process logic pending
-    const file = event?.target?.files?.[0]
-    console.log(
-      '🚀 ~ uploadImage ~ file:',
-      event,
-      file
-    )
+  const [
+    file,
+    setFile
+  ] = useState<File>()
+  const [
+    isLoading,
+    setIsLoading
+  ] = useState(false)
+  const { user } = useUser()
+  const refInput = useRef<HTMLInputElement | null>(null)
+  const { media, getMedia } = useMedia(user as User)
+  const { errorMessage, successMessage } = useMessages()
+  const { progress, startProgress, endProgress } = useProgress()
 
-    // const { data, error } = await supabase
-    //   .storage
-    //   .from('uploads')
-    //   .upload(
-    //     userId + '/' + uuidv4(),
-    //     file
-    //   )
+  const supabase = supabaseClient()
 
-    // if (data) {
-    //   getMedia()
-    // } else {
-    //   console.log(error)
-    // }
+  const reset = () => {
+    if (refInput?.current?.value) {
+      refInput.current.value = ''
+    }
+  }
+
+  const handleFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFile(event?.target?.files?.[0])
+    console.log(file)
+  }
+
+  // TODO: Refactor, many responsibilities
+  const uploadImage = async () => {
+    if (!file) return false
+    setIsLoading(true)
+    const isBigFile = file.size > 500000000
+    startProgress({
+      start: isBigFile
+        ? 10
+        : 30,
+      increases: isBigFile
+        ? 5
+        : 30
+    })
+
+    const { data, error } = await supabase
+      .storage
+      .from('uploads')
+      .upload(
+        `${user?.id}/documents/${crypto.randomUUID()}-${file.name}`,
+        file
+      )
+
+    if (data) {
+      console.log(data)
+      getMedia()
+      reset()
+      successMessage('File successfully uploaded')
+    } else {
+      console.error(error)
+      errorMessage(uploadImage)
+    }
+    setIsLoading(false)
+    endProgress()
+    return true
   }
 
   return (
@@ -58,14 +107,24 @@ const DialogFileUpload = () => {
             <Input
               id="upload"
               type="file"
-              onChange={uploadImage}
+              ref={refInput}
+              onChange={handleFile}
             />
           </div>
-          <Button type="submit" size="sm" className="px-3">
+
+          {media.map((item, index) => (
+            <div key={index}>
+              {item.name}, {item.owner}
+            </div>
+          ))}
+
+          <Button type="submit" size="sm" className="px-3" disabled={isLoading || !file} onClick={uploadImage}>
             <span className="sr-only">Upload</span>
             <IconFileUpload stroke={1} size={18} />
           </Button>
+
         </div>
+        {!!progress && <Progress value={progress} />}
       </DialogContent>
     </Dialog>
   )
