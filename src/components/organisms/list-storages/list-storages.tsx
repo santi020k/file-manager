@@ -1,10 +1,12 @@
 'use client'
 
+import { useMemo } from 'react'
+
 import { IconX } from '@tabler/icons-react'
 import { Metadata } from 'next'
 import Gallery from '@/components/organisms/gallery/gallery'
-import useMedia, { ByOptions } from '@/hooks/use-media'
-import useUser, { type User } from '@/hooks/use-user'
+import { ByOptions, type Media } from '@/hooks/use-media'
+import useMedias from '@/hooks/use-medias'
 import { cn } from '@/lib/utils'
 import FileForm from '@/organisms/file-form/file-form'
 import useEditStore from '@/store/useEditStore'
@@ -15,29 +17,41 @@ export const metadata: Metadata = {
 }
 
 const Dashboard = () => {
-  const { user } = useUser()
-  const { medias: mediasDocument, isLoading: isLoadingDocument } = useMedia(
-    user as User,
-    ByOptions.Documents
-  )
-  const { medias: mediasPrivate, isLoading: isLoadingPrivate } = useMedia(
-    user as User,
-    ByOptions.Privates
-  )
-  const { medias: mediasDrive, isLoading: isLoadingDrive } = useMedia(
-    user as User,
-    ByOptions.Drive
-  )
+  const {
+    mediasDocument,
+    isLoadingDocument,
+    mediasPrivate,
+    isLoadingPrivate,
+    mediasDrive,
+    isLoadingDrive
+  } = useMedias()
   const edit = useEditStore(state => state.edit)
   const { openEdit, closeEdit } = useEditStore(state => state)
 
-  const handleEdit = (id?: string) => {
-    if (id && id !== edit.id) {
-      openEdit(id)
+  const handleEdit = (media?: Media) => {
+    if (media?.id && media.id !== edit?.media?.id) {
+      openEdit(media)
     } else {
       closeEdit()
     }
   }
+
+  // TODO: Move this
+  let folder = ByOptions.Documents
+  if (edit?.media?.url.split('/').includes(ByOptions.Privates)) {
+    folder = ByOptions.Privates
+  } else if (edit?.media?.url.split('/').includes(ByOptions.Drive)) {
+    folder = ByOptions.Drive
+  }
+  const formInitialValues = useMemo(
+    () => ({
+      name: edit?.media?.name ?? '',
+      url: edit?.media?.url ?? '',
+      type: edit?.media?.metadata?.mimetype?.split('/')?.[0] ?? '',
+      folder
+    }),
+    [edit?.media]
+  )
 
   return (
     <div className="container overflow-x-hidden px-0 pt-[160px] sm:overflow-x-visible sm:pt-[65px]">
@@ -55,18 +69,17 @@ const Dashboard = () => {
               <h3 className="m-0">
                   Edit
               </h3>
-              <div className="flex size-8 cursor-pointer items-center justify-center" onClick={() => handleEdit()}>
+              <div className="flex size-8 cursor-pointer items-center justify-center" onClick={closeEdit}>
                 <IconX stroke={1} size={18} />
               </div>
             </div>
 
-            <FileForm />
+            {edit.isOpen && <FileForm initialValues={formInitialValues} />}
 
           </div>
         </aside>
 
         <div>
-          {/* Content */}
           <section className="p-6 pb-16 md:order-1">
             <Gallery title="Documents" medias={mediasDocument} onEdit={handleEdit} isLoading={isLoadingDocument} />
           </section>

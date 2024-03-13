@@ -12,6 +12,11 @@ import Select, {
   SelectTrigger,
   SelectValue
 } from '@/atoms/select/select'
+import { ByOptions } from '@/hooks/use-media'
+import useMedias from '@/hooks/use-medias'
+import useMessages from '@/hooks/use-messages'
+import useUser from '@/hooks/use-user'
+import supabaseClient from '@/lib/supabase/supabaseClient'
 import Form, {
   FormControl,
   FormDescription,
@@ -22,19 +27,95 @@ import Form, {
 } from '@/molecules/form/form'
 import { fileFormSchema } from '@/schemas/file'
 
-const FileForm = () => {
+export interface InitialValues {
+  name?: string
+  url?: string
+  type?: string
+  folder?: string
+}
+
+export interface FileFormProps {
+  initialValues?: InitialValues
+}
+
+const defaultForm = {
+  name: '',
+  url: '',
+  type: '',
+  folder: ''
+}
+
+const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
+  const { user } = useUser()
+  const { errorMessage, successMessage } = useMessages()
+  const { getMediasDocument, getMediasPrivate, getMediasDrive, mediasDocument, mediasDrive, mediasPrivate } = useMedias()
+
+  const supabase = supabaseClient()
+
   const form = useForm<z.infer<typeof fileFormSchema>>({
     resolver: zodResolver(fileFormSchema),
-    defaultValues: {
-      name: '',
-      url: '',
-      type: '',
-      folder: ''
-    }
+    defaultValues: initialValues ?? defaultForm
   })
 
-  function onSubmit (values: z.infer<typeof fileFormSchema>) {
-    console.log(values)
+  // TODO: Refactor
+  const onSubmit = async (values: z.infer<typeof fileFormSchema>) => {
+    if (initialValues?.folder === values.folder) return false
+
+    const oldDirection = `${user?.id}/${initialValues?.folder ?? ByOptions.Documents}/${values.name}`
+    const newDirection = `${user?.id}/${values.folder ?? ByOptions.Documents}/${values.name}`
+
+    // TODO: Move and refactor, create folder with empty file prevent supabase error when moved
+    switch (values.folder) {
+      case ByOptions.Documents:
+        if (mediasDocument.length) {
+          await supabase.storage.from('uploads').upload(
+            `${ByOptions.Documents}/.keep.txt`,
+            ''
+          )
+        }
+        break
+
+      case ByOptions.Privates:
+        if (mediasDrive.length) {
+          await supabase.storage.from('uploads').upload(
+            `${ByOptions.Privates}/.keep.txt`,
+            ''
+          )
+        }
+        break
+
+      case ByOptions.Drive:
+        if (mediasPrivate.length) {
+          await supabase.storage.from('uploads').upload(
+            `${ByOptions.Documents}/.keep.txt`,
+            ''
+          )
+        }
+        break
+
+      default:
+        break
+    }
+
+    const { data } = await supabase
+      .storage
+      .from('uploads')
+      .move(
+        oldDirection,
+        newDirection
+      )
+
+    if (data) {
+      successMessage()
+      // TODO: improve with new js pattern matching, no need to update everything
+      getMediasDocument()
+      getMediasPrivate()
+      getMediasDrive()
+    } else {
+      errorMessage(() => onSubmit(values))
+    }
+
+    return true
   }
 
   return (
@@ -101,9 +182,9 @@ const FileForm = () => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="private">Private Documents</SelectItem>
-                  <SelectItem value="public">Public Documents</SelectItem>
-                  <SelectItem value="drive">Google Drive</SelectItem>
+                  <SelectItem value={ByOptions.Documents}>Documents</SelectItem>
+                  <SelectItem value={ByOptions.Privates}>Private Documents</SelectItem>
+                  <SelectItem value={ByOptions.Drive}>Google Drive</SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription>

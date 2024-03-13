@@ -45,7 +45,6 @@ const DialogFileUpload = () => {
 
   const handleFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFile(event?.target?.files?.[0])
-    console.log(file)
   }
 
   // TODO: Refactor, many responsibilities
@@ -71,7 +70,6 @@ const DialogFileUpload = () => {
       )
 
     if (data) {
-      console.log(data)
       getMedias()
       reset()
       successMessage('File successfully uploaded')

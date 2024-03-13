@@ -7,7 +7,7 @@ import useBatchStore from '@/store/useBatchStore'
 import useEditStore from '@/store/useEditStore'
 
 interface GalleryProps {
-  onEdit: (id?: string) => void
+  onEdit: (media?: Media) => void
   title?: string
   medias?: Media[]
   isLoading: boolean
@@ -69,14 +69,15 @@ const Gallery: React.FC<GalleryProps> = ({ onEdit, title, medias, isLoading }) =
         edit.isOpen && 'grid-cols-1 sm:grid-cols-1 md:grid-cols-2'
       )}>
         {/* TODO: Move this to new component */}
-        {medias?.map(({ id, url, name, metadata }) => {
+        {medias?.map(media => {
+          const { id, url, name, metadata } = media
           const [
             type,
             format
           ] = metadata.mimetype.split('/')
           return (
             <GalleryCard
-              onClick={() => onEdit(id)}
+              onClick={() => onEdit(media)}
               onSelected={() => handleSelected(id)}
               isBatchOpen={batch.isOpen}
               isSelected={!!batch.selected.find(item => item === id)}

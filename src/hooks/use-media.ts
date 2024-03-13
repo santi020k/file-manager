@@ -6,7 +6,7 @@ import supabaseClient, { FileObject, User } from '@/lib/supabase/supabaseClient'
 export enum ByOptions {
   Documents = 'documents',
   Privates = 'privates',
-  Drive = 'rive'
+  Drive = 'drive'
 }
 
 export interface Media extends FileObject {
