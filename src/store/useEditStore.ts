@@ -2,12 +2,12 @@ import { create } from 'zustand'
 
 interface Edit {
   isOpen: boolean
-  id?: number
+  id?: string
 }
 
 interface EditState {
   edit: Edit
-  openEdit: (id: number) => void
+  openEdit: (id: string) => void
   closeEdit: () => void
 }
 

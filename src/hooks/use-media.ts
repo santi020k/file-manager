@@ -3,18 +3,47 @@ import { useEffect, useState } from 'react'
 import useMessages from '@/hooks/use-messages'
 import supabaseClient, { FileObject, User } from '@/lib/supabase/supabaseClient'
 
-const useMedia = (user: User) => {
+export enum ByOptions {
+  Documents = 'documents',
+  Privates = 'privates',
+  Drive = 'rive'
+}
+
+export interface Media extends FileObject {
+  url: string
+}
+
+const useMedia = (user: User, by?: string) => {
   const [
-    media,
-    setMedia
-  ] = useState<FileObject[]>([])
+    medias,
+    setMedias
+  ] = useState<Media[]>([])
   const { errorMessage } = useMessages()
 
   const supabase = supabaseClient()
 
-  const getMedia = async () => {
-    const { data, error } = await supabase.storage.from('uploads').list(
-      user?.id + '/',
+  const addUrl = async (files: FileObject[]) => {
+    let temporalMedias: Media[] = []
+    for (const file of files) {
+      const { data } = await supabase.storage.from('uploads').createSignedUrl(
+        `${user?.id}/${by ?? ByOptions.Documents}/${file.name}`,
+        3600
+      )
+      temporalMedias = [
+        ...temporalMedias,
+        {
+          ...file,
+          url: data?.signedUrl ?? ''
+        }
+      ]
+    }
+
+    setMedias(temporalMedias)
+  }
+
+  const getMedias = async () => {
+    const { data: files, error } = await supabase.storage.from('uploads').list(
+      `${user?.id}/${by ?? ByOptions.Documents}/`,
       {
         limit: 10,
         offset: 0,
@@ -25,24 +54,26 @@ const useMedia = (user: User) => {
       }
     )
 
-    if (data) {
-      setMedia(data)
+    if (files) {
+      addUrl(files)
     } else {
-      errorMessage(getMedia)
+      errorMessage(getMedias)
       console.error(error)
     }
   }
 
   useEffect(
     () => {
-      getMedia()
+      if (user) {
+        getMedias()
+      }
     },
-    []
+    [user]
   )
 
   return {
-    media,
-    getMedia
+    medias,
+    getMedias
   }
 }
 

@@ -31,7 +31,7 @@ const DialogFileUpload = () => {
   ] = useState(false)
   const { user } = useUser()
   const refInput = useRef<HTMLInputElement | null>(null)
-  const { media, getMedia } = useMedia(user as User)
+  const { getMedias } = useMedia(user as User)
   const { errorMessage, successMessage } = useMessages()
   const { progress, startProgress, endProgress } = useProgress()
 
@@ -72,7 +72,7 @@ const DialogFileUpload = () => {
 
     if (data) {
       console.log(data)
-      getMedia()
+      getMedias()
       reset()
       successMessage('File successfully uploaded')
     } else {
@@ -111,12 +111,6 @@ const DialogFileUpload = () => {
               onChange={handleFile}
             />
           </div>
-
-          {media.map((item, index) => (
-            <div key={index}>
-              {item.name}, {item.owner}
-            </div>
-          ))}
 
           <Button type="submit" size="sm" className="px-3" disabled={isLoading || !file} onClick={uploadImage}>
             <span className="sr-only">Upload</span>

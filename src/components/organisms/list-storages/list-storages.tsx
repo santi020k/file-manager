@@ -3,6 +3,8 @@
 import { IconX } from '@tabler/icons-react'
 import { Metadata } from 'next'
 import Gallery from '@/components/organisms/gallery/gallery'
+import useMedia, { ByOptions } from '@/hooks/use-media'
+import useUser, { type User } from '@/hooks/use-user'
 import { cn } from '@/lib/utils'
 import FileForm from '@/organisms/file-form/file-form'
 import useEditStore from '@/store/useEditStore'
@@ -13,10 +15,15 @@ export const metadata: Metadata = {
 }
 
 const Dashboard = () => {
+  const { user } = useUser()
+  const { medias: mediasDocument } = useMedia(
+    user as User,
+    ByOptions.Documents
+  )
   const edit = useEditStore(state => state.edit)
   const { openEdit, closeEdit } = useEditStore(state => state)
 
-  const handleEdit = (id?: number) => {
+  const handleEdit = (id?: string) => {
     if (id && id !== edit.id) {
       openEdit(id)
     } else {
@@ -52,7 +59,7 @@ const Dashboard = () => {
 
         {/* Content */}
         <section className="p-6 pb-16 md:order-1">
-          <Gallery onEdit={handleEdit} />
+          <Gallery title="Documents" medias={mediasDocument} onEdit={handleEdit} />
         </section>
       </div>
     </div>
