@@ -32,6 +32,7 @@ const ListStorages = () => {
 
   // TODO: Move this
   let folder = ByOptions.Documents
+
   if (edit?.media?.url.split('/').includes(ByOptions.Privates)) {
     folder = ByOptions.Privates
   } else if (edit?.media?.url.split('/').includes(ByOptions.Drive)) {
@@ -48,7 +49,9 @@ const ListStorages = () => {
   useEffect(() => {
     if (user) {
       getMedias(ByOptions.Documents)
+
       getMedias(ByOptions.Privates)
+
       getMedias(ByOptions.Drive)
     }
   }, [user])
@@ -90,4 +93,5 @@ const ListStorages = () => {
     </div>
   )
 }
+
 export default ListStorages

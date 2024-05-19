@@ -17,11 +17,13 @@ interface ErrorBoundaryState {
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor (props: ErrorBoundaryProps) {
     super(props)
+
     this.state = { hasError: false }
   }
 
   static getDerivedStateFromError (error: Error): ErrorBoundaryState {
     console.error(error)
+
     return { hasError: true }
   }
 

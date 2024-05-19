@@ -30,7 +30,9 @@ const DialogFileUpload = () => {
         <DialogHeader>
           <DialogTitle className="mt-0">Connect Google Drive</DialogTitle>
           <DialogDescription>
-            Link your Google Drive account to our platform using our Google Drive API connection. Enjoy seamless access to your files and documents stored in Google Drive, right from within our application
+            Link your Google Drive account to our platform using our Google Drive API
+            connection. Enjoy seamless access to your files and documents stored in
+            Google Drive, right from within our application
           </DialogDescription>
         </DialogHeader>
         <div className="flex items-center space-x-2">

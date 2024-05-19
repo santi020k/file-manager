@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react'
+import React from 'react'
 
 import { cn } from '@/lib/utils'
 
@@ -14,7 +14,6 @@ export enum ToasterVariants {
 }
 
 const ToastProvider = ToastPrimitives.Provider
-
 const ToastViewport = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Viewport>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Viewport>
@@ -25,6 +24,7 @@ const ToastViewport = React.forwardRef<
     {...props}
   />
 ))
+
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName
 
 // eslint-disable-next-line tailwindcss/no-custom-classname
@@ -40,20 +40,18 @@ const toastVariants = cva('group pointer-events-auto relative flex w-full items-
     variant: 'default'
   }
 })
-
 const Toast = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
   VariantProps<typeof toastVariants>
->(({ className, variant, ...props }, ref) => {
-  return (
-    <ToastPrimitives.Root
-      ref={ref}
-      className={cn(toastVariants({ variant }), className)}
-      {...props}
-    />
-  )
-})
+>(({ className, variant, ...props }, ref) => (
+  <ToastPrimitives.Root
+    ref={ref}
+    className={cn(toastVariants({ variant }), className)}
+    {...props}
+  />
+))
+
 Toast.displayName = ToastPrimitives.Root.displayName
 
 const ToastAction = React.forwardRef<
@@ -66,6 +64,7 @@ const ToastAction = React.forwardRef<
     {...props}
   />
 ))
+
 ToastAction.displayName = ToastPrimitives.Action.displayName
 
 const ToastClose = React.forwardRef<
@@ -81,6 +80,7 @@ const ToastClose = React.forwardRef<
     <Cross2Icon className="size-4" />
   </ToastPrimitives.Close>
 ))
+
 ToastClose.displayName = ToastPrimitives.Close.displayName
 
 const ToastTitle = React.forwardRef<
@@ -93,6 +93,7 @@ const ToastTitle = React.forwardRef<
     {...props}
   />
 ))
+
 ToastTitle.displayName = ToastPrimitives.Title.displayName
 
 const ToastDescription = React.forwardRef<
@@ -105,6 +106,7 @@ const ToastDescription = React.forwardRef<
     {...props}
   />
 ))
+
 ToastDescription.displayName = ToastPrimitives.Description.displayName
 
 type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>

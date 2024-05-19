@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 import Button, { ButtonVariants } from '@/atoms/button/button'
 import Dialog, {
@@ -38,7 +38,6 @@ const DialogFileUpload = () => {
   const { getMedias } = useMedia()
   const { errorMessage, successMessage } = useMessages()
   const { progress, startProgress, endProgress } = useProgress()
-
   const supabase = supabaseClient()
 
   const reset = () => {
@@ -51,11 +50,14 @@ const DialogFileUpload = () => {
     setFile(event?.target?.files?.[0])
   }
 
-  // TODO: Refactor, many responsibilities
+  // TODO: Refactor, a lot of responsibilities
   const uploadImage = async () => {
     if (!file) return false
+
     setIsLoading(true)
+
     const isBigFile = file.size > 500000000
+
     startProgress({ start: isBigFile ? 10 : 30, increases: isBigFile ? 5 : 30 })
 
     const { data, error } = await supabase
@@ -65,14 +67,20 @@ const DialogFileUpload = () => {
 
     if (data) {
       getMedias(ByOptions.Documents)
+
       reset()
+
       successMessage('File successfully uploaded')
     } else {
       console.error(error)
+
       errorMessage(uploadImage)
     }
+
     setIsLoading(false)
+
     endProgress()
+
     return true
   }
 
@@ -88,7 +96,8 @@ const DialogFileUpload = () => {
         <DialogHeader>
           <DialogTitle className="mt-0">Upload File</DialogTitle>
           <DialogDescription>
-            Quickly and easily upload files with our intuitive upload file ui/infrastructure. Simply select your files, and they&#39;ll be ready to go in no time
+            Quickly and easily upload files with our intuitive upload file
+            ui/infrastructure. Simply select your files, and they&#39;ll be ready to go in no time
           </DialogDescription>
         </DialogHeader>
         <div className="flex items-center space-x-2">

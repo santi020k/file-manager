@@ -27,8 +27,9 @@ const actionTypes = {
 
 let count = 0
 
-function genId () {
+const genId = () => {
   count = (count + 1) % Number.MAX_SAFE_INTEGER
+
   return count.toString()
 }
 
@@ -65,6 +66,7 @@ const addToRemoveQueue = (toastId: string) => {
 
   const timeout = setTimeout(() => {
     toastTimeouts.delete(toastId)
+
     dispatch({
       type: 'REMOVE_TOAST',
       toastId
@@ -99,8 +101,10 @@ export const reducer = (state: State, action: Action): State => {
     case 'DISMISS_TOAST': {
       const { toastId } = action
 
-      // ! Side effects ! - This could be extracted into a dismissToast() action,
-      // but I'll keep it here for simplicity
+      /*
+       * ! Side effects ! - This could be extracted into a dismissToast() action,
+       * but I'll keep it here for simplicity
+       */
       if (toastId) {
         addToRemoveQueue(toastId)
       } else {
@@ -119,6 +123,7 @@ export const reducer = (state: State, action: Action): State => {
           : t))
       }
     }
+
     case 'REMOVE_TOAST':
       if (action.toastId === undefined) {
         return {
@@ -126,6 +131,7 @@ export const reducer = (state: State, action: Action): State => {
           toasts: []
         }
       }
+
       return {
         ...state,
         toasts: state.toasts.filter(t => t.id !== action.toastId)
@@ -133,12 +139,13 @@ export const reducer = (state: State, action: Action): State => {
   }
 }
 
-const listeners: Array<(state: State) => void> = []
+const listeners: ((state: State) => void)[] = []
 
 let memoryState: State = { toasts: [] }
 
-function dispatch (action: Action) {
+const dispatch = (action: Action) => {
   memoryState = reducer(memoryState, action)
+
   listeners.forEach(listener => {
     listener(memoryState)
   })
@@ -146,9 +153,8 @@ function dispatch (action: Action) {
 
 type Toast = Omit<ToasterToast, 'id'>
 
-function toast ({ ...props }: Toast) {
+const toast = ({ ...props }: Toast) => {
   const id = genId()
-
   const update = (props: ToasterToast) => dispatch({
     type: 'UPDATE_TOAST',
     toast: {
@@ -180,7 +186,7 @@ function toast ({ ...props }: Toast) {
   }
 }
 
-function useToast () {
+const useToast = () => {
   const [
     state,
     setState
@@ -188,8 +194,10 @@ function useToast () {
 
   React.useEffect(() => {
     listeners.push(setState)
+
     return () => {
       const index = listeners.indexOf(setState)
+
       if (index > -1) {
         listeners.splice(index, 1)
       }

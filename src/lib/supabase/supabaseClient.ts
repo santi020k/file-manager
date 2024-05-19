@@ -4,9 +4,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { FileObject } from '@supabase/storage-js'
 import { User } from '@supabase/supabase-js'
 
-export const supabaseClient = () => {
-  return createClientComponentClient<Database>()
-}
+export const supabaseClient = () => createClientComponentClient<Database>()
 
 export default supabaseClient
 

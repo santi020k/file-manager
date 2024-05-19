@@ -1,3 +1,5 @@
+import React from 'react'
+
 import SectionTitle from '@/atoms/section-title/section-title'
 
 import SkeletonCard from '@/molecules/skeleton-card/skeleton-card'
@@ -25,7 +27,6 @@ const Gallery: React.FC<GalleryProps> = ({ onEdit, title, medias, isLoading, byO
   const edit = useEditStore(state => state.edit)
   const batch = useBatchStore(state => state.batch)
   const { handleSelected } = useBatchStore(state => state)
-
   const isEmpty = !medias?.length
 
   // TODO: Move To new component
@@ -77,6 +78,7 @@ const Gallery: React.FC<GalleryProps> = ({ onEdit, title, medias, isLoading, byO
             type,
             format
           ] = metadata.mimetype.split('/')
+
           return (
             <GalleryCard
               onClick={() => onEdit(media)}

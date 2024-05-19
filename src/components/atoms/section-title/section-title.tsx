@@ -1,3 +1,5 @@
+import React from 'react'
+
 export interface SectionTitle {
   title?: string
   children?: React.ReactNode

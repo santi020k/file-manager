@@ -1,3 +1,5 @@
+import React from 'react'
+
 export interface GalleryCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string
   description?: string

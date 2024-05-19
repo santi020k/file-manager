@@ -19,15 +19,13 @@ export interface Media extends FileObject {
 const useMedia = () => {
   const user = useUserStore(state => state.user)
   const medias = useMediasStore(state => state.medias)
-
   const { onUpdateMedias, onStartLoading } = useMediasStore(state => state)
-
   const { errorMessage } = useMessages()
-
   const supabase = supabaseClient()
 
   const addUrl = async (files: FileObject[], thisBy: ByOptions) => {
     let temporalMedias: Media[] = []
+
     await Promise.allSettled(files.map(file => (
       supabase.storage.from('uploads').createSignedUrl(`${user?.id}/${thisBy}/${file.name}`, 3600)
         .then(({ data }) => {
@@ -46,6 +44,7 @@ const useMedia = () => {
 
   const getMedias = async (thisBy: ByOptions) => {
     onStartLoading(thisBy)
+
     const { data: files, error } = await supabase.storage.from('uploads').list(`${user?.id}/${thisBy ?? ByOptions.Documents}/`, {
       // TODO: Add pagination or infinite scroll (Future)
       limit: 9999,
@@ -60,6 +59,7 @@ const useMedia = () => {
       await addUrl(files, thisBy)
     } else {
       errorMessage(() => getMedias(thisBy))
+
       console.error(error)
     }
   }

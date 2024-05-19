@@ -34,7 +34,6 @@ const initialState = {
     medias: []
   }
 }
-
 const useMediasStore = create<MediasState>()(set => ({
   medias: initialState,
   onUpdateMedias: (type, medias) => set(state => ({

@@ -31,6 +31,7 @@ const Header = () => {
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut()
+
     if (error) {
       errorMessage(handleLogout)
     } else {
@@ -41,6 +42,7 @@ const Header = () => {
   const handleDelete = async () => {
     if (!batch.selected.length) {
       successMessage('there was nothing to delete')
+
       return false
     }
 
@@ -51,18 +53,24 @@ const Header = () => {
 
     if (error || !data.length) {
       errorMessage(handleLogout)
+
       return true
     } else {
       getMedias(ByOptions.Documents)
+
       getMedias(ByOptions.Privates)
+
       getMedias(ByOptions.Drive)
+
       successMessage()
+
       return false
     }
   }
 
   const handleToggleBatch = () => {
     closeEdit()
+
     toggleBatch()
   }
 

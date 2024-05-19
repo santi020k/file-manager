@@ -6,12 +6,13 @@ import useUserStore from '@/store/use-user-store'
 const useUser = () => {
   const user = useUserStore(state => state.user)
   const { onSaveUser, isLoading, onStartLoading } = useUserStore(state => state)
-
   const supabase = supabaseClient()
 
   const getUser = async () => {
     onStartLoading()
+
     const { data: { user } } = await supabase.auth.getUser()
+
     if (user) {
       onSaveUser(user)
     }

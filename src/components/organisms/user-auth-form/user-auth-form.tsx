@@ -11,15 +11,14 @@ import useMessages from '@/hooks/use-messages'
 
 import { IconBrandGoogleFilled, IconLoader2 } from '@tabler/icons-react'
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>
 
-export function UserAuthForm ({ className, ...props }: UserAuthFormProps) {
+export const UserAuthForm = ({ className, ...props }: UserAuthFormProps) => {
   const [
     isLoading,
     setIsLoading
   ] = React.useState<boolean>(false)
   const { errorMessage } = useMessages()
-
   const supabase = supabaseClient()
 
   const handleGoogleOAuth = async () => {
@@ -38,6 +37,7 @@ export function UserAuthForm ({ className, ...props }: UserAuthFormProps) {
 
     if (error) {
       setIsLoading(false)
+
       errorMessage(handleGoogleOAuth)
     }
   }

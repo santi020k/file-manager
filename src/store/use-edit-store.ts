@@ -14,7 +14,6 @@ interface EditState {
 }
 
 const initialState = { isOpen: false }
-
 const useEditStore = create<EditState>()(set => ({
   edit: initialState,
   openEdit: media => set(() => ({

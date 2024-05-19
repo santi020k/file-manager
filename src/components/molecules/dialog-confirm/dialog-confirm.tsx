@@ -1,3 +1,5 @@
+import React from 'react'
+
 import Button, { ButtonVariants } from '@/atoms/button/button'
 import Dialog, {
   DialogClose,
@@ -27,13 +29,14 @@ const DialogConfirm: React.FC<DialogConfirmProps> = ({ onConfirm }) => (
       <DialogHeader>
         <DialogTitle>Deleting Multimedia Assets</DialogTitle>
         <DialogDescription>
-            Are you sure you want to delete the selected multimedia assets? This action cannot be undone. Please ensure that you have selected the correct assets before proceeding
+          Are you sure you want to delete the selected multimedia assets?
+          This action cannot be undone. Please ensure that you have selected the correct assets before proceeding
         </DialogDescription>
       </DialogHeader>
       <DialogFooter className="sm:justify-end">
         <DialogClose asChild>
           <Button type="button" variant={ButtonVariants.Secondary}>
-              Close
+            Close
           </Button>
         </DialogClose>
         <DialogClose asChild>

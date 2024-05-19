@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import Button from '@/atoms/button/button'
@@ -54,9 +54,7 @@ const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
   const user = useUserStore(state => state.user)
   const { errorMessage, successMessage } = useMessages()
   const { getMedias } = useMedia()
-
   const supabase = supabaseClient()
-
   const form = useForm<z.infer<typeof fileFormSchema>>({
     resolver: zodResolver(fileFormSchema),
     defaultValues: useMemo(() => initialValues ?? defaultForm, [initialValues])
@@ -72,7 +70,6 @@ const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
 
     const oldDirection = `${user?.id}/${initialValues?.folder ?? ByOptions.Documents}/${values.name}`
     const newDirection = `${user?.id}/${values.folder ?? ByOptions.Documents}/${values.name}`
-
     const { data } = await supabase
       .storage
       .from('uploads')
@@ -80,13 +77,18 @@ const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
 
     if (data) {
       successMessage()
+
       // TODO: improve with new js pattern matching, no need to update everything
       getMedias(ByOptions.Documents)
+
       getMedias(ByOptions.Privates)
+
       getMedias(ByOptions.Drive)
+
       return true
     } else {
       errorMessage(() => onSubmit(values))
+
       return false
     }
   }
@@ -161,7 +163,8 @@ const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
                 </SelectContent>
               </Select>
               <FormDescription>
-                Whether you want to store them in a public repository, keep them private, or seamlessly integrate them with your Google Drive projects
+                Whether you want to store them in a public repository, keep them private,
+                or seamlessly integrate them with your Google Drive projects
               </FormDescription>
               <FormMessage />
             </FormItem>
