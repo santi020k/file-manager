@@ -1,9 +1,9 @@
+/* eslint-disable react/no-multi-comp */
 'use client'
 
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'
-
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import {
   CheckIcon,
@@ -17,6 +17,7 @@ const DropdownMenuGroup = DropdownMenuPrimitive.Group
 const DropdownMenuPortal = DropdownMenuPrimitive.Portal
 const DropdownMenuSub = DropdownMenuPrimitive.Sub
 const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup
+
 const DropdownMenuSubTrigger = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
@@ -33,8 +34,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
   </DropdownMenuPrimitive.SubTrigger>
 ))
 
-DropdownMenuSubTrigger.displayName =
-  DropdownMenuPrimitive.SubTrigger.displayName
+DropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayName
 
 const DropdownMenuSubContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
@@ -47,8 +47,7 @@ const DropdownMenuSubContent = React.forwardRef<
   />
 ))
 
-DropdownMenuSubContent.displayName =
-  DropdownMenuPrimitive.SubContent.displayName
+DropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayName
 
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
@@ -77,7 +76,8 @@ const DropdownMenuItem = React.forwardRef<
     className={
       cn(`relative flex select-none items-center rounded-sm px-2 py-1.5 text-sm
         outline-none transition-colors focus:bg-accent focus:text-accent-foreground
-        data-[disabled]:pointer-events-none data-[disabled]:opacity-50 cursor-pointer`, inset && 'pl-8', className)}
+        data-[disabled]:pointer-events-none data-[disabled]:opacity-50 cursor-pointer`, inset && 'pl-8', className)
+    }
     {...props}
   />
 ))
@@ -103,8 +103,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
   </DropdownMenuPrimitive.CheckboxItem>
 ))
 
-DropdownMenuCheckboxItem.displayName =
-  DropdownMenuPrimitive.CheckboxItem.displayName
+DropdownMenuCheckboxItem.displayName = DropdownMenuPrimitive.CheckboxItem.displayName
 
 const DropdownMenuRadioItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,

@@ -1,10 +1,12 @@
+import React from 'react'
+
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 
+import './globals.css'
+
 import ErrorBoundary from '@/molecules/error-boundary/error-boundary'
 import Toaster from '@/molecules/toaster/toaster'
-
-import './globals.css'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -28,10 +30,10 @@ export const metadata: Metadata = {
   description: 'File manager Open Source Project'
 }
 
-export default function RootLayout ({
+export default function RootLayout({
   children
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">

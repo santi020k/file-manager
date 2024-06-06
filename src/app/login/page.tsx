@@ -3,9 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
-import supabaseServer from '@/lib/supabase/supabaseServer'
-
 import { UserAuthForm } from '@/components/organisms/user-auth-form/user-auth-form'
+import supabaseServer from '@/lib/supabase/supabaseServer'
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -14,6 +13,7 @@ export const metadata: Metadata = {
 
 const LoginPage = async () => {
   const supabase = supabaseServer()
+
   const {
     data: { session }
   } = await supabase.auth.getSession()
@@ -22,8 +22,7 @@ const LoginPage = async () => {
 
   return (
     <main
-      className=
-        "container relative grid h-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0"
+      className="container relative grid h-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0"
     >
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
         <div className="absolute inset-0 bg-login bg-cover bg-center opacity-75" />
@@ -39,29 +38,32 @@ const LoginPage = async () => {
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
             <h1 className="mb-0 text-2xl font-semibold tracking-tight">
-             Create or login to your account
+              Create or login to your account
             </h1>
             <p className="text-sm text-muted-foreground">
-             Simplify your file management experience
+              Simplify your file management experience
             </p>
           </div>
           <UserAuthForm />
           <p className="px-8 text-center text-sm text-muted-foreground">
-            By clicking continue, you agree to our{' '}
+            By clicking continue, you agree to our
+            {' '}
             <Link
               href="/terms"
               className="underline underline-offset-4 hover:text-primary"
             >
-             Terms of Service
-            </Link>{' '}
-             and{' '}
+              Terms of Service
+            </Link>
+            {' '}
+            and
+            {' '}
             <Link
               href="/privacy"
               className="underline underline-offset-4 hover:text-primary"
             >
-             Privacy Policy
+              Privacy Policy
             </Link>
-             .
+            .
           </p>
         </div>
       </section>
