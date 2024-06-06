@@ -9,7 +9,7 @@ import Toast, {
 } from '@/atoms/toast/toast'
 import useToast from '@/hooks/use-toast'
 
-function Toaster() {
+const Toaster = () => {
   const { toasts } = useToast()
 
   return (

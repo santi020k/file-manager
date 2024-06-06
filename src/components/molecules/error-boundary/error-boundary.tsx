@@ -36,7 +36,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 
   render() {
-    if (this.state.hasError) {
+    const { hasError } = this.state
+
+    if (hasError) {
       return (
         <div className="flex h-screen w-screen flex-col items-center justify-center">
           <h2 className="mb-1 mt-0">Oops, there is an error!</h2>
@@ -51,7 +53,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
       )
     }
 
-    return this.props.children
+    const { children } = this.props
+
+    return children
   }
 }
 

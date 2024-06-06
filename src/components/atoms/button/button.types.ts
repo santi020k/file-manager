@@ -1,3 +1,5 @@
+import React from 'react'
+
 export enum types {
   primary = 'primary',
   secondary = 'secondary'

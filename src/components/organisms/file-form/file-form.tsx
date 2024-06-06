@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-handler-names */
 'use client'
 
 import React, { useEffect, useMemo } from 'react'

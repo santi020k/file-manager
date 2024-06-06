@@ -1,3 +1,4 @@
+/* eslint-disable react/no-multi-comp */
 import * as React from 'react'
 import {
   Controller,
