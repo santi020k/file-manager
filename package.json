@@ -41,7 +41,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@santi020k/eslint-config-santi020k": "^1.1.7",
+    "@santi020k/eslint-config-santi020k": "^1.2.2",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
@@ -69,5 +69,8 @@
     "*.{js,jsx,ts,tsx,astro,md}": [
       "eslint --fix"
     ]
+  },
+  "overrides": {
+    "eslint": "^9.4.0"
   }
 }

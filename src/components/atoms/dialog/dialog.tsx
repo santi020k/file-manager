@@ -3,7 +3,6 @@
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'
-
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { Cross2Icon } from '@radix-ui/react-icons'
 
@@ -11,6 +10,7 @@ const Dialog = DialogPrimitive.Root
 const DialogTrigger = DialogPrimitive.Trigger
 const DialogPortal = DialogPrimitive.Portal
 const DialogClose = DialogPrimitive.Close
+
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
@@ -54,7 +54,8 @@ const DialogContent = React.forwardRef<
           hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2
           disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground
           `
-        }>
+        }
+      >
         <Cross2Icon className="size-4" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>

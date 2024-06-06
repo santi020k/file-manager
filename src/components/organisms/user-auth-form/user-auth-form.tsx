@@ -3,12 +3,9 @@
 import * as React from 'react'
 
 import Button from '@/atoms/button/button'
-
+import useMessages from '@/hooks/use-messages'
 import supabaseClient from '@/lib/supabase/supabaseClient'
 import { cn } from '@/lib/utils'
-
-import useMessages from '@/hooks/use-messages'
-
 import { IconBrandGoogleFilled, IconLoader2 } from '@tabler/icons-react'
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>
@@ -18,6 +15,7 @@ export const UserAuthForm = ({ className, ...props }: UserAuthFormProps) => {
     isLoading,
     setIsLoading
   ] = React.useState<boolean>(false)
+
   const { errorMessage } = useMessages()
   const supabase = supabaseClient()
 
@@ -45,7 +43,7 @@ export const UserAuthForm = ({ className, ...props }: UserAuthFormProps) => {
   return (
     <div className={cn('grid gap-6', className)} {...props}>
       <Button variant="outline" type="button" onClick={handleGoogleOAuth} disabled={isLoading}>
-        {isLoading && <IconLoader2 stroke={1} className="mr-1 animate-spin" />}
+        {isLoading ? <IconLoader2 stroke={1} className="mr-1 animate-spin" /> : null}
         {!isLoading && <IconBrandGoogleFilled size={16} className="mr-1" />}
         Google
       </Button>

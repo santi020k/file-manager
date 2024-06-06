@@ -1,5 +1,4 @@
 import { ToastAction, ToasterVariants } from '@/atoms/toast/toast'
-
 import useToast from '@/hooks/use-toast'
 
 const useMessages = () => {

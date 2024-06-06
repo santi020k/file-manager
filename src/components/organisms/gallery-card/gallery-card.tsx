@@ -3,6 +3,8 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { type GalleryCardProps } from './gallery-card.types'
+
 import Badge from '@/atoms/badge/badge'
 import Card, {
   CardContent,
@@ -11,9 +13,6 @@ import Card, {
   CardHeader,
   CardTitle
 } from '@/atoms/card/card'
-
-import { type GalleryCardProps } from './gallery-card.types'
-
 import Checkbox from '@/components/atoms/checkbox/checkbox'
 import { IconExternalLink } from '@tabler/icons-react'
 
@@ -32,11 +31,13 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
     <Card onClick={handleClick} {...restProps}>
       <CardContent className="border-b p-0">
         <div className="relative aspect-square h-auto max-w-full">
-          {isBatchOpen && (
-            <Badge variant="secondary" className="absolute left-2 top-2 z-20 cursor-pointer p-2" onClick={handleClick}>
-              <Checkbox checked={isSelected} />
-            </Badge>
-          )}
+          {isBatchOpen
+            ? (
+              <Badge variant="secondary" className="absolute left-2 top-2 z-20 cursor-pointer p-2" onClick={handleClick}>
+                <Checkbox checked={isSelected} />
+              </Badge>
+            )
+            : null}
           {type === 'image'
             ? (
               <Image fill className="m-0 h-auto max-w-full rounded-t-sm object-cover object-center" sizes="320px" src={file} alt={title || description || 'gallery image'} />
@@ -52,14 +53,16 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
         </div>
       </CardContent>
       <CardHeader>
-        {title && <CardTitle className="break-words">{title}</CardTitle>}
-        {description && <CardDescription className="m-0 break-words">{description}</CardDescription>}
+        {title ? <CardTitle className="break-words">{title}</CardTitle> : null}
+        {description ? <CardDescription className="m-0 break-words">{description}</CardDescription> : null}
       </CardHeader>
-      {footer && (
-        <CardFooter>
-          {footer}
-        </CardFooter>
-      )}
+      {footer
+        ? (
+          <CardFooter>
+            {footer}
+          </CardFooter>
+        )
+        : null}
     </Card>
   )
 }

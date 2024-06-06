@@ -15,6 +15,7 @@ const initialState = {
   isOpen: false,
   selected: []
 }
+
 const useBatchStore = create<BatchState>()(set => ({
   batch: initialState,
   toggleBatch: () => set(({ batch }) => ({

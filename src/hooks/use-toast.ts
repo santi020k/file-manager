@@ -140,7 +140,6 @@ export const reducer = (state: State, action: Action): State => {
 }
 
 const listeners: ((state: State) => void)[] = []
-
 let memoryState: State = { toasts: [] }
 
 const dispatch = (action: Action) => {
@@ -155,6 +154,7 @@ type Toast = Omit<ToasterToast, 'id'>
 
 const toast = ({ ...props }: Toast) => {
   const id = genId()
+
   const update = (props: ToasterToast) => dispatch({
     type: 'UPDATE_TOAST',
     toast: {
@@ -162,6 +162,7 @@ const toast = ({ ...props }: Toast) => {
       id
     }
   })
+
   const dismiss = () => dispatch({
     type: 'DISMISS_TOAST',
     toastId: id

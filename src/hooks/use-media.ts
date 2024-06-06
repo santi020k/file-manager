@@ -1,9 +1,7 @@
+import useMessages from '@/hooks/use-messages'
 import supabaseClient, { FileObject, User } from '@/lib/supabase/supabaseClient'
-
 import useMediasStore from '@/store/use-medias-store'
 import useUserStore from '@/store/use-user-store'
-
-import useMessages from '@/hooks/use-messages'
 
 export enum ByOptions {
   Documents = 'documents',

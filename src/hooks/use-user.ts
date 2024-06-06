@@ -1,5 +1,4 @@
 import supabaseClient, { User } from '@/lib/supabase/supabaseClient'
-
 import useUserStore from '@/store/use-user-store'
 
 // TODO: move to store

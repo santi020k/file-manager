@@ -18,8 +18,8 @@ export interface CardBuilderProps {
 const BasicCard: React.FC<CardBuilderProps> = ({ title, description, content, footer }) => (
   <Card>
     <CardHeader>
-      {title && <CardTitle>{title}</CardTitle>}
-      {description && <CardDescription>{description}</CardDescription>}
+      {title ? <CardTitle>{title}</CardTitle> : null}
+      {description ? <CardDescription>{description}</CardDescription> : null}
     </CardHeader>
     <CardContent>
       {content}

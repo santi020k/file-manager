@@ -2,17 +2,13 @@
 
 import { useEffect, useMemo } from 'react'
 
-import FileForm from '@/organisms/file-form/file-form'
-
-import { cn } from '@/lib/utils'
-
-import useEditStore from '@/store/use-edit-store'
-import useMediasStore from '@/store/use-medias-store'
-
+import Gallery from '@/components/organisms/gallery/gallery'
 import useMedia, { ByOptions, type Media } from '@/hooks/use-media'
 import useUser from '@/hooks/use-user'
-
-import Gallery from '@/components/organisms/gallery/gallery'
+import { cn } from '@/lib/utils'
+import FileForm from '@/organisms/file-form/file-form'
+import useEditStore from '@/store/use-edit-store'
+import useMediasStore from '@/store/use-medias-store'
 import { IconX } from '@tabler/icons-react'
 
 const ListStorages = () => {
@@ -64,14 +60,14 @@ const ListStorages = () => {
           <div className="sticky top-[65px] flex h-[calc(100vh-65px)] flex-col gap-2 overflow-y-auto p-6">
             <div className="flex flex-row flex-nowrap items-center justify-between sm:my-8">
               <h3 className="m-0">
-                  Edit
+                Edit
               </h3>
               <div className="flex size-8 cursor-pointer items-center justify-center" onClick={closeEdit}>
                 <IconX stroke={1} size={18} />
               </div>
             </div>
 
-            {edit.isOpen && <FileForm initialValues={formInitialValues} />}
+            {edit.isOpen ? <FileForm initialValues={formInitialValues} /> : null}
 
           </div>
         </aside>

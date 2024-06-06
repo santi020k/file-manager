@@ -1,5 +1,4 @@
 import { User } from '@/lib/supabase/supabaseClient'
-
 import { create } from 'zustand'
 
 interface UserState {

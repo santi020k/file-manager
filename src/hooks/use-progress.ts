@@ -10,6 +10,7 @@ const useProgress = () => {
     progress,
     setProgress
   ] = useState(0)
+
   const refInterval = useRef<ReturnType<typeof setInterval>>()
 
   const resetCounter = () => {

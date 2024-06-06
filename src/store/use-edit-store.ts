@@ -1,5 +1,4 @@
 import { type Media } from '@/hooks/use-media'
-
 import { create } from 'zustand'
 
 interface Edit {
@@ -14,6 +13,7 @@ interface EditState {
 }
 
 const initialState = { isOpen: false }
+
 const useEditStore = create<EditState>()(set => ({
   edit: initialState,
   openEdit: media => set(() => ({

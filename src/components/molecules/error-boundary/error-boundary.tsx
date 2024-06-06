@@ -7,27 +7,27 @@ import React, { Component, ErrorInfo, ReactNode } from 'react'
 import Button from '@/atoms/button/button'
 
 interface ErrorBoundaryProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 interface ErrorBoundaryState {
-  hasError: boolean;
+  hasError: boolean
 }
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  constructor (props: ErrorBoundaryProps) {
+  constructor(props: ErrorBoundaryProps) {
     super(props)
 
     this.state = { hasError: false }
   }
 
-  static getDerivedStateFromError (error: Error): ErrorBoundaryState {
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     console.error(error)
 
     return { hasError: true }
   }
 
-  componentDidCatch (error: Error, errorInfo: ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // TODO: Pending error handling, like Sentry
     console.error({
       error,
@@ -35,7 +35,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     })
   }
 
-  render () {
+  render() {
     if (this.state.hasError) {
       return (
         <div className="flex h-screen w-screen flex-col items-center justify-center">

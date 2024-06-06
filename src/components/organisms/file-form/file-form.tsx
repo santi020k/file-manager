@@ -11,7 +11,9 @@ import Select, {
   SelectTrigger,
   SelectValue
 } from '@/atoms/select/select'
-
+import useMedia, { ByOptions } from '@/hooks/use-media'
+import useMessages from '@/hooks/use-messages'
+import supabaseClient from '@/lib/supabase/supabaseClient'
 import Form, {
   FormControl,
   FormDescription,
@@ -20,15 +22,8 @@ import Form, {
   FormLabel,
   FormMessage
 } from '@/molecules/form/form'
-
-import supabaseClient from '@/lib/supabase/supabaseClient'
-
-import useUserStore from '@/store/use-user-store'
-
-import useMedia, { ByOptions } from '@/hooks/use-media'
-import useMessages from '@/hooks/use-messages'
-
 import { fileFormSchema } from '@/schemas/file'
+import useUserStore from '@/store/use-user-store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -55,6 +50,7 @@ const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
   const { errorMessage, successMessage } = useMessages()
   const { getMedias } = useMedia()
   const supabase = supabaseClient()
+
   const form = useForm<z.infer<typeof fileFormSchema>>({
     resolver: zodResolver(fileFormSchema),
     defaultValues: useMemo(() => initialValues ?? defaultForm, [initialValues])
@@ -70,6 +66,7 @@ const FileForm: React.FC<FileFormProps> = ({ initialValues }) => {
 
     const oldDirection = `${user?.id}/${initialValues?.folder ?? ByOptions.Documents}/${values.name}`
     const newDirection = `${user?.id}/${values.folder ?? ByOptions.Documents}/${values.name}`
+
     const { data } = await supabase
       .storage
       .from('uploads')

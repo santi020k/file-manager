@@ -6,10 +6,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/atoms/dropdown/dropdown'
-
-import DialogConfirm from '@/molecules/dialog-confirm/dialog-confirm'
-
 import Button from '@/components/atoms/button/button'
+import DialogConfirm from '@/molecules/dialog-confirm/dialog-confirm'
 import { IconTextCaption } from '@tabler/icons-react'
 
 interface SelectedOptionsProps {

@@ -1,11 +1,9 @@
 import Building from '@/atoms/building/building'
 
-const TermsPage = () => {
-  return (
-    <main>
-      <Building />
-    </main>
-  )
-}
+const TermsPage = () => (
+  <main>
+    <Building />
+  </main>
+)
 
 export default TermsPage

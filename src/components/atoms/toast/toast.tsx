@@ -1,9 +1,9 @@
+/* eslint-disable react/no-multi-comp */
 'use client'
 
 import React from 'react'
 
 import { cn } from '@/lib/utils'
-
 import { Cross2Icon } from '@radix-ui/react-icons'
 import * as ToastPrimitives from '@radix-ui/react-toast'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -14,6 +14,7 @@ export enum ToasterVariants {
 }
 
 const ToastProvider = ToastPrimitives.Provider
+
 const ToastViewport = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Viewport>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Viewport>
@@ -40,6 +41,7 @@ const toastVariants = cva('group pointer-events-auto relative flex w-full items-
     variant: 'default'
   }
 })
+
 const Toast = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
