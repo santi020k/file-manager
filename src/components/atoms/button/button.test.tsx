@@ -1,8 +1,9 @@
+import { afterEach, describe, expect, it, vi } from 'vitest'
+
 import Button from './button'
 
 import { cleanup, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { afterEach, describe, expect, it, vi } from 'vitest'
 
 describe('Button component', () => {
   afterEach(() => {

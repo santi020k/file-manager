@@ -7,6 +7,7 @@ import Toast, {
   ToastTitle,
   ToastViewport
 } from '@/atoms/toast/toast'
+
 import useToast from '@/hooks/use-toast'
 
 const Toaster = () => {

@@ -3,7 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { type GalleryCardProps } from './gallery-card.types'
+import Checkbox from '@/components/atoms/checkbox/checkbox'
 
 import Badge from '@/atoms/badge/badge'
 import Card, {
@@ -13,7 +13,9 @@ import Card, {
   CardHeader,
   CardTitle
 } from '@/atoms/card/card'
-import Checkbox from '@/components/atoms/checkbox/checkbox'
+
+import { type GalleryCardProps } from './gallery-card.types'
+
 import { IconExternalLink } from '@tabler/icons-react'
 
 const GalleryCard: React.FC<GalleryCardProps> = ({

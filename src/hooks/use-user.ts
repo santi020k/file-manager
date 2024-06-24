@@ -1,5 +1,6 @@
-import supabaseClient, { User } from '@/lib/supabase/supabaseClient'
 import useUserStore from '@/store/use-user-store'
+
+import supabaseClient, { User } from '@/lib/supabase/supabaseClient'
 
 // TODO: move to store
 const useUser = () => {

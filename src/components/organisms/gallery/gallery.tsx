@@ -1,13 +1,18 @@
 import React from 'react'
 
-import SectionTitle from '@/atoms/section-title/section-title'
 import GalleryCard from '@/components/organisms/gallery-card/gallery-card'
-import { ByOptions, type Media } from '@/hooks/use-media'
-import { cn } from '@/lib/utils'
+
+import SectionTitle from '@/atoms/section-title/section-title'
+
 import SkeletonCard from '@/molecules/skeleton-card/skeleton-card'
+
 import useBatchStore from '@/store/use-batch-store'
 import useEditStore from '@/store/use-edit-store'
 import useUserStore from '@/store/use-user-store'
+
+import { ByOptions, type Media } from '@/hooks/use-media'
+
+import { cn } from '@/lib/utils'
 
 interface GalleryProps {
   onEdit: (media?: Media) => void

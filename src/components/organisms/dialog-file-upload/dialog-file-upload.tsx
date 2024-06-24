@@ -13,11 +13,15 @@ import Dialog, {
 import Input from '@/atoms/input/input'
 import Label from '@/atoms/label/label'
 import Progress from '@/atoms/progress/progress'
+
+import useUserStore from '@/store/use-user-store'
+
 import useMedia, { ByOptions } from '@/hooks/use-media'
 import useMessages from '@/hooks/use-messages'
 import useProgress from '@/hooks/use-progress'
+
 import supabaseClient from '@/lib/supabase/supabaseClient'
-import useUserStore from '@/store/use-user-store'
+
 import { IconFileUpload } from '@tabler/icons-react'
 
 const DialogFileUpload = () => {

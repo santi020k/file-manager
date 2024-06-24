@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 import { UserAuthForm } from '@/components/organisms/user-auth-form/user-auth-form'
+
 import supabaseServer from '@/lib/supabase/supabaseServer'
 
 export const metadata: Metadata = {

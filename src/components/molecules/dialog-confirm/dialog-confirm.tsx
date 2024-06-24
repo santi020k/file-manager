@@ -10,6 +10,7 @@ import Dialog, {
   DialogTitle,
   DialogTrigger
 } from '@/atoms/dialog/dialog'
+
 import { IconTrash } from '@tabler/icons-react'
 
 interface DialogConfirmProps {

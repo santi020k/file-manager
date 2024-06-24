@@ -2,6 +2,7 @@
   "name": "file-manager",
   "version": "1.0.0",
   "private": false,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,7 +10,8 @@
     "lint": "next lint",
     "test": "vitest",
     "pre-commit": "lint-staged && vitest run",
-    "pre-push": "eslint . --fix --max-warnings=0 && npm run build",
+    "lint:fix": "eslint . --fix --max-warnings=0",
+    "pre-push": "npm run lint:fix && npm run build",
     "prepare": "husky config/.husky"
   },
   "dependencies": {
@@ -41,7 +43,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@santi020k/eslint-config-santi020k": "^1.2.2",
+    "@santi020k/eslint-config-santi020k": "^2.0.1",
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
